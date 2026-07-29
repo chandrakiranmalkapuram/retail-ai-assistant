@@ -1,2 +1,25 @@
-# retail-ai-assistant
-A production-inspired AI retail assistant built with React, TypeScript, Python, Supabase, and OpenAI. It provides conversational customer support, order lookup, product recommendations, inventory search, and voice interactions.
+# Retail AI Assistant
+
+An AI-powered retail assistant that helps customers through chat and voice.
+
+## Features
+
+- Product recommendations
+- Order lookup
+- Store availability
+- Customer support
+- Voice interaction
+- AI-powered conversations
+
+## Tech Stack
+
+- React
+- TypeScript
+- Python
+- Supabase
+- OpenAI
+- GitHub
+
+## Status
+
+🚧 Currently under development.
