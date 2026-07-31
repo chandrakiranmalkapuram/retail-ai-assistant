@@ -1,14 +1,27 @@
-import Header from './components/Header';
+import { useState } from "react";
+import Header from "./components/Header";
+import ChatWindow from "./components/ChatWindow";
+import ChatInput from "./components/ChatInput";
+import { Message } from "./types/chat";
 
 function App() {
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: 1,
+      role: "assistant",
+      content: "Hello! I'm your Retail AI Assistant. How can I help you today?",
+    },
+  ]);
+
   return (
-    <>
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header />
-      <main style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
-        <h2>Welcome to the Retail AI Assistant</h2>
-        <p>Start building your application here.</p>
+
+      <main className="flex-1 flex flex-col">
+        <ChatWindow messages={messages} />
+        <ChatInput />
       </main>
-    </>
+    </div>
   );
 }
 

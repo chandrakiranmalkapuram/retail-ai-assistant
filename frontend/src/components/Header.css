@@ -34,7 +34,8 @@
 .logo-icon {
   width: 28px;
   height: 28px;
-  color: #6366f1; /* Modern indigo color */
+  color: #6366f1;
+  /* Modern indigo color */
 }
 
 .header-title {
@@ -54,11 +55,11 @@
   .header-content {
     padding: 1rem;
   }
-  
+
   .header-title {
     font-size: 1.125rem;
   }
-  
+
   .logo-icon {
     width: 24px;
     height: 24px;
