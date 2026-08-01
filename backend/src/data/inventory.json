@@ -1,0 +1,377 @@
+[
+  {
+    "productId": "PRD-001",
+    "storeId": "STR-DAG",
+    "quantity": 16
+  },
+  {
+    "productId": "PRD-001",
+    "storeId": "STR-ILF",
+    "quantity": 11
+  },
+  {
+    "productId": "PRD-001",
+    "storeId": "STR-ROM",
+    "quantity": 4
+  },
+  {
+    "productId": "PRD-001",
+    "storeId": "STR-BAR",
+    "quantity": 14
+  },
+  {
+    "productId": "PRD-001",
+    "storeId": "STR-LAK",
+    "quantity": 1
+  },
+  {
+    "productId": "PRD-002",
+    "storeId": "STR-DAG",
+    "quantity": 1
+  },
+  {
+    "productId": "PRD-002",
+    "storeId": "STR-ILF",
+    "quantity": 3
+  },
+  {
+    "productId": "PRD-002",
+    "storeId": "STR-ROM",
+    "quantity": 18
+  },
+  {
+    "productId": "PRD-002",
+    "storeId": "STR-BAR",
+    "quantity": 16
+  },
+  {
+    "productId": "PRD-002",
+    "storeId": "STR-LAK",
+    "quantity": 19
+  },
+  {
+    "productId": "PRD-003",
+    "storeId": "STR-DAG",
+    "quantity": 12
+  },
+  {
+    "productId": "PRD-003",
+    "storeId": "STR-ILF",
+    "quantity": 17
+  },
+  {
+    "productId": "PRD-003",
+    "storeId": "STR-ROM",
+    "quantity": 0
+  },
+  {
+    "productId": "PRD-003",
+    "storeId": "STR-BAR",
+    "quantity": 14
+  },
+  {
+    "productId": "PRD-003",
+    "storeId": "STR-LAK",
+    "quantity": 3
+  },
+  {
+    "productId": "PRD-004",
+    "storeId": "STR-DAG",
+    "quantity": 13
+  },
+  {
+    "productId": "PRD-004",
+    "storeId": "STR-ILF",
+    "quantity": 4
+  },
+  {
+    "productId": "PRD-004",
+    "storeId": "STR-ROM",
+    "quantity": 18
+  },
+  {
+    "productId": "PRD-004",
+    "storeId": "STR-BAR",
+    "quantity": 13
+  },
+  {
+    "productId": "PRD-004",
+    "storeId": "STR-LAK",
+    "quantity": 17
+  },
+  {
+    "productId": "PRD-005",
+    "storeId": "STR-DAG",
+    "quantity": 19
+  },
+  {
+    "productId": "PRD-005",
+    "storeId": "STR-ILF",
+    "quantity": 10
+  },
+  {
+    "productId": "PRD-005",
+    "storeId": "STR-ROM",
+    "quantity": 0
+  },
+  {
+    "productId": "PRD-005",
+    "storeId": "STR-BAR",
+    "quantity": 11
+  },
+  {
+    "productId": "PRD-005",
+    "storeId": "STR-LAK",
+    "quantity": 18
+  },
+  {
+    "productId": "PRD-006",
+    "storeId": "STR-DAG",
+    "quantity": 0
+  },
+  {
+    "productId": "PRD-006",
+    "storeId": "STR-ILF",
+    "quantity": 1
+  },
+  {
+    "productId": "PRD-006",
+    "storeId": "STR-ROM",
+    "quantity": 2
+  },
+  {
+    "productId": "PRD-006",
+    "storeId": "STR-BAR",
+    "quantity": 17
+  },
+  {
+    "productId": "PRD-006",
+    "storeId": "STR-LAK",
+    "quantity": 11
+  },
+  {
+    "productId": "PRD-007",
+    "storeId": "STR-DAG",
+    "quantity": 17
+  },
+  {
+    "productId": "PRD-007",
+    "storeId": "STR-ILF",
+    "quantity": 14
+  },
+  {
+    "productId": "PRD-007",
+    "storeId": "STR-ROM",
+    "quantity": 6
+  },
+  {
+    "productId": "PRD-007",
+    "storeId": "STR-BAR",
+    "quantity": 17
+  },
+  {
+    "productId": "PRD-007",
+    "storeId": "STR-LAK",
+    "quantity": 6
+  },
+  {
+    "productId": "PRD-008",
+    "storeId": "STR-DAG",
+    "quantity": 3
+  },
+  {
+    "productId": "PRD-008",
+    "storeId": "STR-ILF",
+    "quantity": 7
+  },
+  {
+    "productId": "PRD-008",
+    "storeId": "STR-ROM",
+    "quantity": 13
+  },
+  {
+    "productId": "PRD-008",
+    "storeId": "STR-BAR",
+    "quantity": 19
+  },
+  {
+    "productId": "PRD-008",
+    "storeId": "STR-LAK",
+    "quantity": 15
+  },
+  {
+    "productId": "PRD-009",
+    "storeId": "STR-DAG",
+    "quantity": 17
+  },
+  {
+    "productId": "PRD-009",
+    "storeId": "STR-ILF",
+    "quantity": 9
+  },
+  {
+    "productId": "PRD-009",
+    "storeId": "STR-ROM",
+    "quantity": 13
+  },
+  {
+    "productId": "PRD-009",
+    "storeId": "STR-BAR",
+    "quantity": 10
+  },
+  {
+    "productId": "PRD-009",
+    "storeId": "STR-LAK",
+    "quantity": 8
+  },
+  {
+    "productId": "PRD-010",
+    "storeId": "STR-DAG",
+    "quantity": 12
+  },
+  {
+    "productId": "PRD-010",
+    "storeId": "STR-ILF",
+    "quantity": 0
+  },
+  {
+    "productId": "PRD-010",
+    "storeId": "STR-ROM",
+    "quantity": 19
+  },
+  {
+    "productId": "PRD-010",
+    "storeId": "STR-BAR",
+    "quantity": 18
+  },
+  {
+    "productId": "PRD-010",
+    "storeId": "STR-LAK",
+    "quantity": 17
+  },
+  {
+    "productId": "PRD-011",
+    "storeId": "STR-DAG",
+    "quantity": 4
+  },
+  {
+    "productId": "PRD-011",
+    "storeId": "STR-ILF",
+    "quantity": 15
+  },
+  {
+    "productId": "PRD-011",
+    "storeId": "STR-ROM",
+    "quantity": 6
+  },
+  {
+    "productId": "PRD-011",
+    "storeId": "STR-BAR",
+    "quantity": 13
+  },
+  {
+    "productId": "PRD-011",
+    "storeId": "STR-LAK",
+    "quantity": 8
+  },
+  {
+    "productId": "PRD-012",
+    "storeId": "STR-DAG",
+    "quantity": 7
+  },
+  {
+    "productId": "PRD-012",
+    "storeId": "STR-ILF",
+    "quantity": 0
+  },
+  {
+    "productId": "PRD-012",
+    "storeId": "STR-ROM",
+    "quantity": 19
+  },
+  {
+    "productId": "PRD-012",
+    "storeId": "STR-BAR",
+    "quantity": 18
+  },
+  {
+    "productId": "PRD-012",
+    "storeId": "STR-LAK",
+    "quantity": 17
+  },
+  {
+    "productId": "PRD-013",
+    "storeId": "STR-DAG",
+    "quantity": 1
+  },
+  {
+    "productId": "PRD-013",
+    "storeId": "STR-ILF",
+    "quantity": 9
+  },
+  {
+    "productId": "PRD-013",
+    "storeId": "STR-ROM",
+    "quantity": 8
+  },
+  {
+    "productId": "PRD-013",
+    "storeId": "STR-BAR",
+    "quantity": 19
+  },
+  {
+    "productId": "PRD-013",
+    "storeId": "STR-LAK",
+    "quantity": 8
+  },
+  {
+    "productId": "PRD-014",
+    "storeId": "STR-DAG",
+    "quantity": 0
+  },
+  {
+    "productId": "PRD-014",
+    "storeId": "STR-ILF",
+    "quantity": 10
+  },
+  {
+    "productId": "PRD-014",
+    "storeId": "STR-ROM",
+    "quantity": 8
+  },
+  {
+    "productId": "PRD-014",
+    "storeId": "STR-BAR",
+    "quantity": 12
+  },
+  {
+    "productId": "PRD-014",
+    "storeId": "STR-LAK",
+    "quantity": 5
+  },
+  {
+    "productId": "PRD-015",
+    "storeId": "STR-DAG",
+    "quantity": 16
+  },
+  {
+    "productId": "PRD-015",
+    "storeId": "STR-ILF",
+    "quantity": 13
+  },
+  {
+    "productId": "PRD-015",
+    "storeId": "STR-ROM",
+    "quantity": 1
+  },
+  {
+    "productId": "PRD-015",
+    "storeId": "STR-BAR",
+    "quantity": 3
+  },
+  {
+    "productId": "PRD-015",
+    "storeId": "STR-LAK",
+    "quantity": 17
+  }
+]

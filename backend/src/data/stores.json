@@ -1,0 +1,42 @@
+[
+  {
+    "storeId": "STR-DAG",
+    "name": "Argos Dagenham",
+    "postcode": "RM10 8TX",
+    "city": "Dagenham",
+    "latitude": 51.5386,
+    "longitude": 0.1482
+  },
+  {
+    "storeId": "STR-ILF",
+    "name": "Argos Ilford",
+    "postcode": "IG1 1RS",
+    "city": "Ilford",
+    "latitude": 51.5595,
+    "longitude": 0.076
+  },
+  {
+    "storeId": "STR-ROM",
+    "name": "Argos Romford",
+    "postcode": "RM1 1ER",
+    "city": "Romford",
+    "latitude": 51.5794,
+    "longitude": 0.1804
+  },
+  {
+    "storeId": "STR-BAR",
+    "name": "Argos Barking",
+    "postcode": "IG11 8RU",
+    "city": "Barking",
+    "latitude": 51.5401,
+    "longitude": 0.0811
+  },
+  {
+    "storeId": "STR-LAK",
+    "name": "Argos Lakeside",
+    "postcode": "RM20 2ZP",
+    "city": "West Thurrock (Lakeside)",
+    "latitude": 51.4883,
+    "longitude": 0.2829
+  }
+]

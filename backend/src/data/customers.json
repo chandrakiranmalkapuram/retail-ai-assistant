@@ -1,0 +1,32 @@
+[
+  {
+    "id": "CUS-001",
+    "name": "Alice Smith",
+    "email": "alice.smith@example.com",
+    "phone": "+44 7700 900101"
+  },
+  {
+    "id": "CUS-002",
+    "name": "Bob Jones",
+    "email": "bob.jones@example.com",
+    "phone": "+44 7700 900102"
+  },
+  {
+    "id": "CUS-003",
+    "name": "Charlie Brown",
+    "email": "charlie.brown@example.com",
+    "phone": "+44 7700 900103"
+  },
+  {
+    "id": "CUS-004",
+    "name": "Diana Prince",
+    "email": "diana.prince@example.com",
+    "phone": "+44 7700 900104"
+  },
+  {
+    "id": "CUS-005",
+    "name": "Evan Davis",
+    "email": "evan.davis@example.com",
+    "phone": "+44 7700 900105"
+  }
+]

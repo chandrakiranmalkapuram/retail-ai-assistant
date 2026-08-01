@@ -1,0 +1,24 @@
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import chatRoutes from './routes/chat.routes';
+import { errorHandler } from './middleware/error.middleware';
+
+dotenv.config();
+
+const app = express();
+const PORT = process.env.PORT || 3001;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Routes
+app.use('/api/chat', chatRoutes);
+
+// Global Error Handling Middleware
+app.use(errorHandler);
+
+app.listen(PORT, () => {
+    console.log(`Backend server is running on http://localhost:${PORT}`);
+});

@@ -1,0 +1,137 @@
+[
+  {
+    "id": "PRD-001",
+    "name": "HP DeskJet 2720",
+    "brand": "HP",
+    "category": "Printers",
+    "price": 44.99,
+    "description": "All-in-one wireless printer for home use.",
+    "rating": 4.2
+  },
+  {
+    "id": "PRD-002",
+    "name": "HP 305 Black Ink",
+    "brand": "HP",
+    "category": "Accessories",
+    "price": 12.99,
+    "description": "Original HP Black Ink Cartridge.",
+    "rating": 4.5
+  },
+  {
+    "id": "PRD-003",
+    "name": "HP 305 Tri-colour Ink",
+    "brand": "HP",
+    "category": "Accessories",
+    "price": 14.99,
+    "description": "Original HP Tri-colour Ink Cartridge.",
+    "rating": 4.4
+  },
+  {
+    "id": "PRD-004",
+    "name": "Canon PIXMA TS3350",
+    "brand": "Canon",
+    "category": "Printers",
+    "price": 39.99,
+    "description": "Compact wireless printer.",
+    "rating": 4
+  },
+  {
+    "id": "PRD-005",
+    "name": "Canon PG-545",
+    "brand": "Canon",
+    "category": "Accessories",
+    "price": 15.99,
+    "description": "Black Ink Cartridge.",
+    "rating": 4.6
+  },
+  {
+    "id": "PRD-006",
+    "name": "Canon CL-546",
+    "brand": "Canon",
+    "category": "Accessories",
+    "price": 18.99,
+    "description": "Colour Ink Cartridge.",
+    "rating": 4.6
+  },
+  {
+    "id": "PRD-007",
+    "name": "Samsung Galaxy S23",
+    "brand": "Samsung",
+    "category": "Smartphones",
+    "price": 849,
+    "description": "Flagship smartphone with amazing camera.",
+    "rating": 4.8
+  },
+  {
+    "id": "PRD-008",
+    "name": "Samsung Galaxy S23 Clear Case",
+    "brand": "Samsung",
+    "category": "Accessories",
+    "price": 19.99,
+    "description": "Official clear protective case.",
+    "rating": 4.1
+  },
+  {
+    "id": "PRD-009",
+    "name": "Apple iPhone 15 Pro",
+    "brand": "Apple",
+    "category": "Smartphones",
+    "price": 999,
+    "description": "Titanium frame and A17 Pro chip.",
+    "rating": 4.9
+  },
+  {
+    "id": "PRD-010",
+    "name": "MagSafe Clear Case",
+    "brand": "Apple",
+    "category": "Accessories",
+    "price": 49,
+    "description": "Official MagSafe compatible case.",
+    "rating": 4.2
+  },
+  {
+    "id": "PRD-011",
+    "name": "AirPods Pro (2nd Gen)",
+    "brand": "Apple",
+    "category": "Audio",
+    "price": 249,
+    "description": "Active noise cancelling wireless earbuds.",
+    "rating": 4.8
+  },
+  {
+    "id": "PRD-012",
+    "name": "20W USB-C Power Adapter",
+    "brand": "Apple",
+    "category": "Accessories",
+    "price": 19,
+    "description": "Fast charger for iPhones and iPads.",
+    "rating": 4.7
+  },
+  {
+    "id": "PRD-013",
+    "name": "Sony WH-1000XM5",
+    "brand": "Sony",
+    "category": "Audio",
+    "price": 329,
+    "description": "Industry leading noise cancelling headphones.",
+    "rating": 4.7
+  },
+  {
+    "id": "PRD-014",
+    "name": "LG C3 55\" OLED TV",
+    "brand": "LG",
+    "category": "TVs",
+    "price": 1299,
+    "description": "Stunning 4K OLED display.",
+    "rating": 4.8
+  },
+  {
+    "id": "PRD-015",
+    "name": "Brother HL-L2350DW",
+    "brand": "Brother",
+    "category": "Printers",
+    "price": 109.99,
+    "description": "Compact mono laser printer.",
+    "rating": 4.5
+  }
+]
