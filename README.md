@@ -250,7 +250,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 📫 Contact
 
-**Your Name** - [LinkedIn](https://linkedin.com/in/yourprofile) - [Email](mailto:your.email@example.com)
+**Your Name** - [LinkedIn](https://www.linkedin.com/in/chandra-kiran-malkapuram/)
 
 Project Link: [https://github.com/yourusername/retail-ai-platform](https://github.com/yourusername/retail-ai-platform)
 
