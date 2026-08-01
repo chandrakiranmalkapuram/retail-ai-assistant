@@ -1,13 +1,14 @@
 interface ChatMessageProps {
   role: 'user' | 'assistant';
   content: string;
+  timestamp: number;
 }
 
-const ChatMessage: React.FC<ChatMessageProps> = ({ role, content }) => {
+const ChatMessage: React.FC<ChatMessageProps> = ({ role, content, timestamp }) => {
   const isUser = role === 'user';
   
   return (
-    <div className={`flex w-full mb-6 ${isUser ? 'justify-end' : 'justify-start'}`}>
+    <div className={`flex w-full mb-6 animate-fade-in-up ${isUser ? 'justify-end' : 'justify-start'}`}>
       {!isUser && (
         <div className="flex-shrink-0 mr-3">
           <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
@@ -24,7 +25,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ role, content }) => {
       )}
       
       <div 
-        className={`max-w-[75%] md:max-w-[65%] px-4 py-3 ${
+        className={`max-w-[75%] md:max-w-[65%] px-4 py-3 flex flex-col ${
           isUser 
             ? 'bg-indigo-600 text-white rounded-2xl rounded-br-sm shadow-sm' 
             : 'bg-white text-gray-800 rounded-2xl rounded-bl-sm shadow-sm border border-gray-100'
@@ -33,6 +34,9 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ role, content }) => {
         <p className="text-sm md:text-base leading-relaxed whitespace-pre-wrap">
           {content}
         </p>
+        <span className={`text-[10px] mt-1 self-end ${isUser ? 'text-indigo-200' : 'text-gray-400'}`}>
+          {new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        </span>
       </div>
       
       {isUser && (

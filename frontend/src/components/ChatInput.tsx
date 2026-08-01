@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 
 interface ChatInputProps {
     onSendMessage: (message: string) => void;
+    disabled?: boolean;
 }
-const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
+const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled = false }) => {
     const [message, setMessage] = useState("");
     const [animatingText, setAnimatingText] = useState<string | null>(null);
 
     const sendMessage = () => {
-        if (!message.trim() || animatingText) return;
+        if (!message.trim() || animatingText || disabled) return;
 
         const sentMessage = message;
         setAnimatingText(sentMessage);
@@ -46,20 +47,24 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
                 <input
                     type="text"
                     value={message}
+                    disabled={disabled}
                     onChange={(e) => setMessage(e.target.value)}
                     onKeyDown={(e) => {
-                        if (e.key === "Enter") {
+                        if (e.key === "Enter" && !disabled) {
                             sendMessage();
                         }
                     }}
-                    className="flex-1 bg-transparent border-none py-3 px-2 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-0"
+                    className="flex-1 bg-transparent border-none py-3 px-2 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="Ask me anything about products or orders..."
                 />
                 {/* Send Button (Right) */}
                 <button
                     type="button"
                     onClick={sendMessage}
-                    className={`mr-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-all duration-300 shadow-sm focus:outline-none flex items-center justify-center relative ${
+                    disabled={disabled}
+                    className={`mr-2 bg-indigo-600 text-white rounded-full transition-all duration-300 shadow-sm focus:outline-none flex items-center justify-center relative ${
+                        disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-indigo-700'
+                    } ${
                         animatingText ? 'px-4 py-2 w-auto max-w-[150px]' : 'p-2 w-10 h-10'
                     }`}
                     aria-label="Send message"

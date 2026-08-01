@@ -1,48 +1,71 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import ChatWindow from "./components/ChatWindow";
 import ChatInput from "./components/ChatInput";
 import type { Message } from "./types/chat";
 
 function App() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 1,
-      role: "assistant",
-      content: "Hello! I'm your Retail AI Assistant. How can I help you today?",
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>(() => {
+    const saved = localStorage.getItem("chat_messages");
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error("Failed to parse chat_messages from localStorage", e);
+      }
+    }
+    return [];
+  });
+  const [isTyping, setIsTyping] = useState(false);
 
-  const handleSendMessage = (message: string) => {
+  useEffect(() => {
+    localStorage.setItem("chat_messages", JSON.stringify(messages));
+  }, [messages]);
+
+  const handleSendMessage = async (message: string) => {
     const userMessage: Message = {
       id: Date.now(),
       role: "user",
       content: message,
+      timestamp: Date.now(),
     };
 
     setMessages((prev) => [...prev, userMessage]);
+    setIsTyping(true);
 
-    setTimeout(() => {
-      let reply = "I'm sorry, I didn't understand that.";
+    try {
+      const response = await fetch("http://localhost:3001/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message }),
+      });
 
-      if (message.toLowerCase().includes("order")) {
-        reply =
-          "Sure! Please tell me your order number or email address.";
-      } else if (message.toLowerCase().includes("printer")) {
-        reply =
-          "No problem! What is your printer model? For example: HP DeskJet 2720.";
-      } else if (message.toLowerCase().includes("hello")) {
-        reply = "Hello! How can I help you today?";
+      if (!response.ok) {
+        throw new Error("Failed to fetch response from backend");
       }
 
+      const data = await response.json();
+      
       const aiMessage: Message = {
         id: Date.now() + 1,
         role: "assistant",
-        content: reply,
+        content: data.reply || "I received an empty response.",
+        timestamp: Date.now(),
       };
 
       setMessages((prev) => [...prev, aiMessage]);
-    }, 1000);
+    } catch (error) {
+      console.error("Chat error:", error);
+      const errorMessage: Message = {
+        id: Date.now() + 1,
+        role: "assistant",
+        content: "I'm sorry, I encountered a network error. Please make sure the backend is running.",
+        timestamp: Date.now(),
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   return (
@@ -50,9 +73,9 @@ function App() {
       <Header />
 
       <main className="flex-1 flex flex-col overflow-hidden w-full mx-auto">
-        <ChatWindow messages={messages} />
+        <ChatWindow messages={messages} isTyping={isTyping} onSendMessage={handleSendMessage} />
         <div className="w-full max-w-4xl mx-auto">
-          <ChatInput onSendMessage={handleSendMessage} />
+          <ChatInput onSendMessage={handleSendMessage} disabled={isTyping} />
         </div>
       </main>
     </div>
