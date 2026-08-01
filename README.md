@@ -250,9 +250,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 📫 Contact
 
-**Your Name** - [LinkedIn](https://www.linkedin.com/in/chandra-kiran-malkapuram/)
+**Chandra Kiran** - [LinkedIn](https://www.linkedin.com/in/chandra-kiran-malkapuram/)
 
-Project Link: [https://github.com/yourusername/retail-ai-platform](https://github.com/yourusername/retail-ai-platform)
+Project Link: [https://github.com/yourusername/retail-ai-platform](https://github.com/chandrakiranmalkapuram/retail-ai-assistant)
 
 <div align="center">
   <i>If you found this project helpful, please consider giving it a ⭐ on GitHub!</i>
