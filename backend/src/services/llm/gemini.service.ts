@@ -25,9 +25,18 @@ export class GeminiService {
     private static conversationHistory: ChatCompletionMessageParam[] = [];
     private static readonly MAX_HISTORY = 20;
 
-    static async generateChatResponse(message: string): Promise<string> {
+    static getHistory(): ChatCompletionMessageParam[] {
+        return this.conversationHistory;
+    }
+
+    static async generateChatResponse(message: string, injectedContext?: string): Promise<string> {
         try {
             let messagesPayload = PromptBuilderService.buildChatPrompt(this.conversationHistory, message);
+
+            if (injectedContext) {
+                // Append the context securely as a system instruction before the generation
+                messagesPayload.push({ role: 'system', content: injectedContext });
+            }
 
             const completion = await openai.chat.completions.create({
                 model: 'google/gemini-2.5-flash',

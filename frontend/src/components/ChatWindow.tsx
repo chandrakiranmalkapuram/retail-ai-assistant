@@ -1,5 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import ChatMessage from './ChatMessage';
+import ProductList from './ProductList';
+import type { ProductCardProps } from './ProductCard';
 import type { Message } from '../types/chat';
 
 interface ChatWindowProps {
@@ -7,6 +9,35 @@ interface ChatWindowProps {
   isTyping?: boolean;
   onSendMessage?: (message: string) => void;
 }
+
+const parseMessageContent = (content: string) => {
+    // Only parse assistant messages
+    const products: ProductCardProps[] = [];
+    const lines = content.split('\n');
+    const cleanLines: string[] = [];
+
+    // Pattern matches: * **Product Name** for $Price (Rating: ...): Description
+    const pattern = /^\*\s+\*\*(.+?)\*\*(?:\s+for\s+|\s*-\s*)\$?([\d,.]+)(?:\s*\(Rating:\s*([\d.]+)\))?[\s:-]+(.*)$/i;
+
+    for (const line of lines) {
+        const match = line.match(pattern);
+        if (match) {
+            products.push({
+                name: match[1].trim(),
+                price: match[2].trim(),
+                rating: match[3] ? match[3].trim() : undefined,
+                description: match[4] ? match[4].trim() : undefined
+            });
+        } else {
+            cleanLines.push(line);
+        }
+    }
+
+    return {
+        text: cleanLines.join('\n').trim(),
+        products
+    };
+};
 
 const ChatWindow: React.FC<ChatWindowProps> = ({ messages, isTyping, onSendMessage }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -48,14 +79,26 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages, isTyping, onSendMessa
           </div>
         )}
 
-        {messages.map((msg) => (
-          <ChatMessage
-            key={msg.id}
-            role={msg.role}
-            content={msg.content}
-            timestamp={msg.timestamp}
-          />
-        ))}
+        {messages.map((msg) => {
+          const { text, products } = msg.role === 'assistant' 
+              ? parseMessageContent(msg.content) 
+              : { text: msg.content, products: [] };
+              
+          return (
+            <div key={msg.id} className="flex flex-col w-full">
+              {text && (
+                <ChatMessage
+                  role={msg.role}
+                  content={text}
+                  timestamp={msg.timestamp}
+                />
+              )}
+              {products.length > 0 && (
+                <ProductList products={products} />
+              )}
+            </div>
+          );
+        })}
 
         {/* Typing Indicator */}
         {isTyping && (

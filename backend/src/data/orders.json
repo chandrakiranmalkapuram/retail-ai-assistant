@@ -1,146 +1,127 @@
 [
   {
     "orderId": "ORD-001",
-    "customerId": "CUS-001",
-    "products": [
-      {
-        "productId": "PRD-008",
-        "quantity": 1,
-        "priceAtTime": 19.99
-      },
-      {
-        "productId": "PRD-006",
-        "quantity": 1,
-        "priceAtTime": 18.99
-      }
-    ],
-    "status": "Shipped",
-    "orderDate": "2026-07-30T02:26:56.386Z",
-    "deliveryDate": "2026-08-01T02:26:56.386Z",
-    "paymentMethod": "Credit Card"
-  },
-  {
-    "orderId": "ORD-002",
-    "customerId": "CUS-002",
-    "products": [
-      {
-        "productId": "PRD-014",
-        "quantity": 2,
-        "priceAtTime": 1299
-      },
-      {
-        "productId": "PRD-010",
-        "quantity": 2,
-        "priceAtTime": 49
-      }
-    ],
-    "status": "Processing",
-    "orderDate": "2026-07-30T02:26:56.387Z",
-    "deliveryDate": null,
-    "paymentMethod": "Credit Card"
-  },
-  {
-    "orderId": "ORD-003",
-    "customerId": "CUS-002",
-    "products": [
-      {
-        "productId": "PRD-001",
-        "quantity": 2,
-        "priceAtTime": 44.99
-      },
-      {
-        "productId": "PRD-014",
-        "quantity": 2,
-        "priceAtTime": 1299
-      }
-    ],
-    "status": "Delivered",
-    "orderDate": "2026-07-30T02:26:56.387Z",
-    "deliveryDate": "2026-08-01T02:26:56.387Z",
-    "paymentMethod": "PayPal"
-  },
-  {
-    "orderId": "ORD-004",
-    "customerId": "CUS-003",
-    "products": [
-      {
-        "productId": "PRD-015",
-        "quantity": 1,
-        "priceAtTime": 109.99
-      },
-      {
-        "productId": "PRD-001",
-        "quantity": 2,
-        "priceAtTime": 44.99
-      },
-      {
-        "productId": "PRD-006",
-        "quantity": 2,
-        "priceAtTime": 18.99
-      }
-    ],
-    "status": "Processing",
-    "orderDate": "2026-07-21T02:26:56.387Z",
-    "deliveryDate": null,
-    "paymentMethod": "PayPal"
-  },
-  {
-    "orderId": "ORD-005",
-    "customerId": "CUS-001",
-    "products": [
-      {
-        "productId": "PRD-009",
-        "quantity": 2,
-        "priceAtTime": 999
-      }
-    ],
-    "status": "Pending",
-    "orderDate": "2026-07-26T02:26:56.387Z",
-    "deliveryDate": null,
-    "paymentMethod": "PayPal"
-  },
-  {
-    "orderId": "ORD-006",
-    "customerId": "CUS-003",
+    "customerId": "CUS-007",
     "products": [
       {
         "productId": "PRD-003",
         "quantity": 1,
-        "priceAtTime": 14.99
+        "priceAtTime": 2.97
       }
     ],
-    "status": "Shipped",
-    "orderDate": "2026-07-25T02:26:56.387Z",
-    "deliveryDate": "2026-07-27T02:26:56.387Z",
+    "status": "Delivered",
+    "orderDate": "2026-07-19T12:51:17.563Z",
+    "deliveryDate": "2026-07-20T18:51:39.881Z",
+    "trackingNumber": "TRK97511545",
+    "courier": "Amazon Logistics",
+    "paymentMethod": "PayPal"
+  },
+  {
+    "orderId": "ORD-002",
+    "customerId": "CUS-001",
+    "products": [
+      {
+        "productId": "PRD-011",
+        "quantity": 2,
+        "priceAtTime": 97.41
+      }
+    ],
+    "status": "Processing",
+    "orderDate": "2026-07-16T23:48:43.276Z",
+    "deliveryDate": null,
+    "paymentMethod": "PayPal"
+  },
+  {
+    "orderId": "ORD-003",
+    "customerId": "CUS-001",
+    "products": [
+      {
+        "productId": "PRD-007",
+        "quantity": 1,
+        "priceAtTime": 12.27
+      }
+    ],
+    "status": "Packed",
+    "orderDate": "2026-07-31T16:27:02.192Z",
+    "deliveryDate": null,
+    "paymentMethod": "PayPal"
+  },
+  {
+    "orderId": "ORD-004",
+    "customerId": "CUS-001",
+    "products": [
+      {
+        "productId": "PRD-009",
+        "quantity": 3,
+        "priceAtTime": 83.36
+      }
+    ],
+    "status": "Cancelled",
+    "orderDate": "2026-07-16T06:11:11.432Z",
+    "deliveryDate": null,
+    "paymentMethod": "Credit Card"
+  },
+  {
+    "orderId": "ORD-005",
+    "customerId": "CUS-003",
+    "products": [
+      {
+        "productId": "PRD-013",
+        "quantity": 1,
+        "priceAtTime": 50.45
+      }
+    ],
+    "status": "Packed",
+    "orderDate": "2026-07-03T15:03:48.965Z",
+    "deliveryDate": null,
+    "paymentMethod": "Credit Card"
+  },
+  {
+    "orderId": "ORD-006",
+    "customerId": "CUS-009",
+    "products": [
+      {
+        "productId": "PRD-002",
+        "quantity": 3,
+        "priceAtTime": 8.42
+      }
+    ],
+    "status": "Returned",
+    "orderDate": "2026-07-20T23:06:28.107Z",
+    "deliveryDate": "2026-07-24T16:26:43.631Z",
+    "trackingNumber": "TRK475123742",
+    "courier": "Amazon Logistics",
     "paymentMethod": "Apple Pay"
   },
   {
     "orderId": "ORD-007",
-    "customerId": "CUS-001",
+    "customerId": "CUS-0010",
     "products": [
       {
-        "productId": "PRD-015",
-        "quantity": 1,
-        "priceAtTime": 109.99
+        "productId": "PRD-013",
+        "quantity": 3,
+        "priceAtTime": 13.03
       }
     ],
-    "status": "Processing",
-    "orderDate": "2026-08-01T02:26:56.387Z",
-    "deliveryDate": null,
+    "status": "Returned",
+    "orderDate": "2026-07-24T01:59:02.223Z",
+    "deliveryDate": "2026-07-26T22:41:23.319Z",
+    "trackingNumber": "TRK485956372",
+    "courier": "Yodel",
     "paymentMethod": "Apple Pay"
   },
   {
     "orderId": "ORD-008",
-    "customerId": "CUS-005",
+    "customerId": "CUS-006",
     "products": [
       {
-        "productId": "PRD-008",
+        "productId": "PRD-014",
         "quantity": 1,
-        "priceAtTime": 19.99
+        "priceAtTime": 24.78
       }
     ],
     "status": "Processing",
-    "orderDate": "2026-07-23T02:26:56.387Z",
+    "orderDate": "2026-07-11T14:07:42.969Z",
     "deliveryDate": null,
     "paymentMethod": "Apple Pay"
   },
@@ -149,129 +130,353 @@
     "customerId": "CUS-005",
     "products": [
       {
-        "productId": "PRD-002",
-        "quantity": 2,
-        "priceAtTime": 12.99
+        "productId": "PRD-013",
+        "quantity": 3,
+        "priceAtTime": 89.38
       }
     ],
-    "status": "Delivered",
-    "orderDate": "2026-07-21T02:26:56.387Z",
-    "deliveryDate": "2026-07-23T02:26:56.387Z",
-    "paymentMethod": "Credit Card"
+    "status": "Packed",
+    "orderDate": "2026-07-16T20:55:20.976Z",
+    "deliveryDate": null,
+    "paymentMethod": "Apple Pay"
   },
   {
     "orderId": "ORD-010",
-    "customerId": "CUS-004",
+    "customerId": "CUS-007",
     "products": [
       {
         "productId": "PRD-002",
-        "quantity": 1,
-        "priceAtTime": 12.99
+        "quantity": 2,
+        "priceAtTime": 78.52
       }
     ],
     "status": "Processing",
-    "orderDate": "2026-07-24T02:26:56.387Z",
+    "orderDate": "2026-07-17T00:41:10.857Z",
     "deliveryDate": null,
-    "paymentMethod": "PayPal"
+    "paymentMethod": "Apple Pay"
   },
   {
     "orderId": "ORD-011",
-    "customerId": "CUS-001",
+    "customerId": "CUS-003",
     "products": [
       {
-        "productId": "PRD-009",
-        "quantity": 2,
-        "priceAtTime": 999
-      },
-      {
-        "productId": "PRD-006",
+        "productId": "PRD-014",
         "quantity": 1,
-        "priceAtTime": 18.99
-      },
-      {
-        "productId": "PRD-011",
-        "quantity": 2,
-        "priceAtTime": 249
+        "priceAtTime": 28.11
       }
     ],
-    "status": "Processing",
-    "orderDate": "2026-07-29T02:26:56.387Z",
+    "status": "Packed",
+    "orderDate": "2026-07-05T07:53:41.856Z",
     "deliveryDate": null,
     "paymentMethod": "Credit Card"
   },
   {
     "orderId": "ORD-012",
-    "customerId": "CUS-005",
-    "products": [
-      {
-        "productId": "PRD-013",
-        "quantity": 2,
-        "priceAtTime": 329
-      },
-      {
-        "productId": "PRD-004",
-        "quantity": 2,
-        "priceAtTime": 39.99
-      },
-      {
-        "productId": "PRD-012",
-        "quantity": 1,
-        "priceAtTime": 19
-      }
-    ],
-    "status": "Shipped",
-    "orderDate": "2026-07-23T02:26:56.387Z",
-    "deliveryDate": "2026-07-25T02:26:56.387Z",
-    "paymentMethod": "Credit Card"
-  },
-  {
-    "orderId": "ORD-013",
-    "customerId": "CUS-002",
-    "products": [
-      {
-        "productId": "PRD-014",
-        "quantity": 2,
-        "priceAtTime": 1299
-      }
-    ],
-    "status": "Delivered",
-    "orderDate": "2026-07-25T02:26:56.387Z",
-    "deliveryDate": "2026-07-27T02:26:56.387Z",
-    "paymentMethod": "Credit Card"
-  },
-  {
-    "orderId": "ORD-014",
-    "customerId": "CUS-005",
+    "customerId": "CUS-004",
     "products": [
       {
         "productId": "PRD-008",
         "quantity": 2,
-        "priceAtTime": 19.99
-      },
-      {
-        "productId": "PRD-015",
-        "quantity": 2,
-        "priceAtTime": 109.99
+        "priceAtTime": 4.62
       }
     ],
-    "status": "Delivered",
-    "orderDate": "2026-07-31T02:26:56.387Z",
-    "deliveryDate": "2026-08-02T02:26:56.387Z",
+    "status": "Processing",
+    "orderDate": "2026-07-02T23:24:17.660Z",
+    "deliveryDate": null,
+    "paymentMethod": "Apple Pay"
+  },
+  {
+    "orderId": "ORD-013",
+    "customerId": "CUS-006",
+    "products": [
+      {
+        "productId": "PRD-005",
+        "quantity": 3,
+        "priceAtTime": 8.74
+      }
+    ],
+    "status": "Processing",
+    "orderDate": "2026-07-25T12:55:10.470Z",
+    "deliveryDate": null,
+    "paymentMethod": "Credit Card"
+  },
+  {
+    "orderId": "ORD-014",
+    "customerId": "CUS-004",
+    "products": [
+      {
+        "productId": "PRD-003",
+        "quantity": 2,
+        "priceAtTime": 92.31
+      }
+    ],
+    "status": "Cancelled",
+    "orderDate": "2026-07-22T14:29:42.004Z",
+    "deliveryDate": null,
     "paymentMethod": "Apple Pay"
   },
   {
     "orderId": "ORD-015",
+    "customerId": "CUS-008",
+    "products": [
+      {
+        "productId": "PRD-012",
+        "quantity": 3,
+        "priceAtTime": 48.16
+      }
+    ],
+    "status": "Packed",
+    "orderDate": "2026-07-22T15:37:30.431Z",
+    "deliveryDate": null,
+    "paymentMethod": "Credit Card"
+  },
+  {
+    "orderId": "ORD-016",
     "customerId": "CUS-002",
+    "products": [
+      {
+        "productId": "PRD-010",
+        "quantity": 1,
+        "priceAtTime": 63.34
+      }
+    ],
+    "status": "Processing",
+    "orderDate": "2026-07-28T02:53:38.763Z",
+    "deliveryDate": null,
+    "paymentMethod": "PayPal"
+  },
+  {
+    "orderId": "ORD-017",
+    "customerId": "CUS-005",
+    "products": [
+      {
+        "productId": "PRD-002",
+        "quantity": 1,
+        "priceAtTime": 1.19
+      }
+    ],
+    "status": "Out for Delivery",
+    "orderDate": "2026-07-13T17:09:23.248Z",
+    "deliveryDate": null,
+    "trackingNumber": "TRK803395979",
+    "courier": "Amazon Logistics",
+    "paymentMethod": "Credit Card"
+  },
+  {
+    "orderId": "ORD-018",
+    "customerId": "CUS-001",
+    "products": [
+      {
+        "productId": "PRD-012",
+        "quantity": 3,
+        "priceAtTime": 8.23
+      }
+    ],
+    "status": "Processing",
+    "orderDate": "2026-07-28T12:47:48.545Z",
+    "deliveryDate": null,
+    "paymentMethod": "PayPal"
+  },
+  {
+    "orderId": "ORD-019",
+    "customerId": "CUS-003",
+    "products": [
+      {
+        "productId": "PRD-008",
+        "quantity": 3,
+        "priceAtTime": 26.47
+      }
+    ],
+    "status": "Returned",
+    "orderDate": "2026-07-09T06:05:30.993Z",
+    "deliveryDate": "2026-07-12T10:13:42.671Z",
+    "trackingNumber": "TRK571014344",
+    "courier": "Royal Mail",
+    "paymentMethod": "PayPal"
+  },
+  {
+    "orderId": "ORD-020",
+    "customerId": "CUS-009",
+    "products": [
+      {
+        "productId": "PRD-001",
+        "quantity": 2,
+        "priceAtTime": 36.28
+      }
+    ],
+    "status": "Delivered",
+    "orderDate": "2026-07-28T12:59:52.883Z",
+    "deliveryDate": "2026-08-01T06:07:25.167Z",
+    "trackingNumber": "TRK859331834",
+    "courier": "Yodel",
+    "paymentMethod": "Apple Pay"
+  },
+  {
+    "orderId": "ORD-021",
+    "customerId": "CUS-007",
+    "products": [
+      {
+        "productId": "PRD-005",
+        "quantity": 3,
+        "priceAtTime": 51.63
+      }
+    ],
+    "status": "Returned",
+    "orderDate": "2026-07-26T00:09:37.629Z",
+    "deliveryDate": "2026-07-27T10:17:55.731Z",
+    "trackingNumber": "TRK214008013",
+    "courier": "DPD",
+    "paymentMethod": "Credit Card"
+  },
+  {
+    "orderId": "ORD-022",
+    "customerId": "CUS-0010",
+    "products": [
+      {
+        "productId": "PRD-015",
+        "quantity": 3,
+        "priceAtTime": 85.3
+      }
+    ],
+    "status": "Out for Delivery",
+    "orderDate": "2026-07-11T04:19:50.853Z",
+    "deliveryDate": null,
+    "trackingNumber": "TRK375402490",
+    "courier": "Evri",
+    "paymentMethod": "Apple Pay"
+  },
+  {
+    "orderId": "ORD-023",
+    "customerId": "CUS-001",
+    "products": [
+      {
+        "productId": "PRD-010",
+        "quantity": 2,
+        "priceAtTime": 27.06
+      }
+    ],
+    "status": "Delivered",
+    "orderDate": "2026-07-12T11:31:46.139Z",
+    "deliveryDate": "2026-07-14T23:53:23.271Z",
+    "trackingNumber": "TRK604547112",
+    "courier": "DPD",
+    "paymentMethod": "Apple Pay"
+  },
+  {
+    "orderId": "ORD-024",
+    "customerId": "CUS-005",
     "products": [
       {
         "productId": "PRD-005",
         "quantity": 1,
-        "priceAtTime": 15.99
+        "priceAtTime": 42.11
+      }
+    ],
+    "status": "Shipped",
+    "orderDate": "2026-07-31T09:42:33.371Z",
+    "deliveryDate": null,
+    "trackingNumber": "TRK494264021",
+    "courier": "DPD",
+    "paymentMethod": "Apple Pay"
+  },
+  {
+    "orderId": "ORD-025",
+    "customerId": "CUS-0010",
+    "products": [
+      {
+        "productId": "PRD-002",
+        "quantity": 3,
+        "priceAtTime": 17.71
+      }
+    ],
+    "status": "Returned",
+    "orderDate": "2026-07-27T22:37:37.656Z",
+    "deliveryDate": "2026-07-29T00:20:10.022Z",
+    "trackingNumber": "TRK916109351",
+    "courier": "Royal Mail",
+    "paymentMethod": "Credit Card"
+  },
+  {
+    "orderId": "ORD-026",
+    "customerId": "CUS-008",
+    "products": [
+      {
+        "productId": "PRD-015",
+        "quantity": 1,
+        "priceAtTime": 92.47
       }
     ],
     "status": "Delivered",
-    "orderDate": "2026-07-21T02:26:56.387Z",
-    "deliveryDate": "2026-07-23T02:26:56.387Z",
-    "paymentMethod": "Credit Card"
+    "orderDate": "2026-07-27T20:27:27.716Z",
+    "deliveryDate": "2026-07-29T22:18:07.060Z",
+    "trackingNumber": "TRK944903749",
+    "courier": "Evri",
+    "paymentMethod": "PayPal"
+  },
+  {
+    "orderId": "ORD-027",
+    "customerId": "CUS-003",
+    "products": [
+      {
+        "productId": "PRD-009",
+        "quantity": 2,
+        "priceAtTime": 62.79
+      }
+    ],
+    "status": "Out for Delivery",
+    "orderDate": "2026-07-15T06:06:55.808Z",
+    "deliveryDate": null,
+    "trackingNumber": "TRK969301715",
+    "courier": "Yodel",
+    "paymentMethod": "Apple Pay"
+  },
+  {
+    "orderId": "ORD-028",
+    "customerId": "CUS-009",
+    "products": [
+      {
+        "productId": "PRD-004",
+        "quantity": 3,
+        "priceAtTime": 96.73
+      }
+    ],
+    "status": "Returned",
+    "orderDate": "2026-07-26T16:23:54.253Z",
+    "deliveryDate": "2026-07-29T05:43:18.248Z",
+    "trackingNumber": "TRK870826098",
+    "courier": "Amazon Logistics",
+    "paymentMethod": "Apple Pay"
+  },
+  {
+    "orderId": "ORD-029",
+    "customerId": "CUS-007",
+    "products": [
+      {
+        "productId": "PRD-006",
+        "quantity": 2,
+        "priceAtTime": 87.65
+      }
+    ],
+    "status": "Packed",
+    "orderDate": "2026-08-01T07:49:40.844Z",
+    "deliveryDate": null,
+    "paymentMethod": "PayPal"
+  },
+  {
+    "orderId": "ORD-030",
+    "customerId": "CUS-004",
+    "products": [
+      {
+        "productId": "PRD-002",
+        "quantity": 1,
+        "priceAtTime": 62.76
+      }
+    ],
+    "status": "Returned",
+    "orderDate": "2026-07-30T00:57:29.251Z",
+    "deliveryDate": "2026-07-31T14:34:19.213Z",
+    "trackingNumber": "TRK667027866",
+    "courier": "DPD",
+    "paymentMethod": "Apple Pay"
   }
 ]
