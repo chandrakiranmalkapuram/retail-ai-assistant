@@ -22,10 +22,14 @@ export class ProductSearchTool implements Tool {
         this.searchService = new ArgosProductSearchService();
     }
 
-    public async execute(args: any): Promise<ProductSearchResult[]> {
+    public async execute(args: any): Promise<any> {
         const query = args.query;
         if (!query) throw new Error("Missing 'query' argument for product_search tool");
         console.log(`[ProductSearchTool] Executing search for: "${query}"`);
-        return await this.searchService.searchProducts(query);
+        const results = await this.searchService.searchProducts(query);
+        return {
+            type: 'product_results',
+            products: results
+        };
     }
 }

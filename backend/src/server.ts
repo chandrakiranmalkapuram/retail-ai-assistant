@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import chatRoutes from './routes/chat.routes';
+import basketRoutes from './routes/basket.routes';
 import { errorHandler } from './middleware/error.middleware';
 
 dotenv.config();
@@ -15,6 +16,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/chat', chatRoutes);
+app.use('/api/basket', basketRoutes);
 
 // Global Error Handling Middleware
 app.use(errorHandler);

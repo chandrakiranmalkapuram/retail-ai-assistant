@@ -1,33 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import type { ProductSearchResult } from '../../../shared/types/product.types';
 
-const ProductCard: React.FC<Partial<ProductSearchResult>> = ({ name, price, rating, description, url }) => {
-    const [image, setImage] = useState<string>('https://placehold.co/400x400?text=Product+Image');
-    const [brand, setBrand] = useState<string>('Unknown Brand');
-    const [availability, setAvailability] = useState<string>('In Stock');
-    const [loading, setLoading] = useState<boolean>(true);
+interface ProductCardProps extends Partial<ProductSearchResult> {
+    onSendMessage?: (message: string) => void;
+}
 
-    useEffect(() => {
-        const fetchProductDetails = async () => {
-            try {
-                const response = await fetch(`https://dummyjson.com/products/search?q=${encodeURIComponent(name || '')}`);
-                const data = await response.json();
-                
-                if (data.products && data.products.length > 0) {
-                    const product = data.products[0];
-                    if (product.thumbnail) setImage(product.thumbnail);
-                    if (product.brand) setBrand(product.brand);
-                    if (product.availabilityStatus) setAvailability(product.availabilityStatus);
-                }
-            } catch (error) {
-                console.error("Failed to fetch product image:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchProductDetails();
-    }, [name]);
+const ProductCard: React.FC<ProductCardProps> = ({ name, price, rating, description, url, image: initialImage, brand: initialBrand, availability: initialAvailability, onSendMessage }) => {
+    const [image] = useState<string | null>(initialImage || null);
+    const [brand] = useState<string>(initialBrand || 'Argos');
+    const [availability] = useState<string>(initialAvailability ? String(initialAvailability) : 'In Stock');
+    const [loading] = useState<boolean>(false);
 
     return (
         <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm overflow-hidden hover:-translate-y-1 hover:shadow-xl transition-all duration-300 ease-out flex flex-col h-full animate-fade-in-up group">
@@ -41,8 +23,8 @@ const ProductCard: React.FC<Partial<ProductSearchResult>> = ({ name, price, rati
                     </div>
                 ) : (
                     <img 
-                        src={image} 
-                        alt={name} 
+                        src={image || 'https://placehold.co/400x400/png?text=No+Image'} 
+                        alt={name || undefined} 
                         className="object-contain max-h-full max-w-full drop-shadow-sm mix-blend-multiply dark:mix-blend-normal transform group-hover:scale-105 transition-transform duration-500"
                     />
                 )}
@@ -70,7 +52,9 @@ const ProductCard: React.FC<Partial<ProductSearchResult>> = ({ name, price, rati
                     <>
                         <div className="flex justify-between items-start gap-3 mb-2">
                             <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-lg leading-snug line-clamp-2">{name}</h3>
-                            <span className="font-bold text-xl text-indigo-600 dark:text-indigo-400 whitespace-nowrap">${price}</span>
+                            <span className="font-bold text-xl text-indigo-600 dark:text-indigo-400 whitespace-nowrap">
+                                {price == null ? 'Price unavailable' : `£${price}`}
+                            </span>
                         </div>
                         
                         <div className="text-sm text-gray-500 dark:text-gray-400 mb-4 flex items-center gap-2 font-medium">
@@ -89,7 +73,7 @@ const ProductCard: React.FC<Partial<ProductSearchResult>> = ({ name, price, rati
 
                 <div className="mt-auto flex gap-3">
                     <button 
-                        onClick={() => alert(`Comparison feature coming soon for ${name}!`)}
+                        onClick={() => onSendMessage ? onSendMessage(`Compare ${name}`) : alert(`Comparison feature coming soon for ${name}!`)}
                         disabled={loading}
                         className="flex-1 py-2.5 px-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-200 font-medium rounded-xl transition-colors duration-200 text-sm focus:outline-none disabled:opacity-50"
                     >

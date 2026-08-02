@@ -2,9 +2,12 @@ import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import ChatWindow from "./components/ChatWindow";
 import ChatInput from "./components/ChatInput";
+import BasketSidebar from "./components/BasketSidebar";
 import type { Message } from "./types/chat";
 
 function App() {
+  const [isBasketOpen, setIsBasketOpen] = useState(false);
+  const [basketUpdatedEvent, setBasketUpdatedEvent] = useState(0);
   const [messages, setMessages] = useState<Message[]>(() => {
     const saved = localStorage.getItem("chat_messages");
     if (saved) {
@@ -67,6 +70,7 @@ function App() {
         id: Date.now() + 1,
         role: "assistant",
         content: data.reply || "I received an empty response.",
+        data: data.data,
         timestamp: Date.now(),
       };
 
@@ -87,10 +91,19 @@ function App() {
 
   return (
     <div className="h-screen bg-white dark:bg-slate-900 transition-colors duration-300 flex flex-col overflow-hidden font-sans">
-      <Header isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+      <Header 
+        isDarkMode={isDarkMode} 
+        toggleDarkMode={toggleDarkMode} 
+        onOpenBasket={() => setIsBasketOpen(true)}
+      />
 
       <main className="flex-1 flex flex-col overflow-hidden w-full max-w-5xl mx-auto relative">
-        <ChatWindow messages={messages} isTyping={isTyping} onSendMessage={handleSendMessage} />
+        <ChatWindow 
+          messages={messages} 
+          isTyping={isTyping} 
+          onSendMessage={handleSendMessage} 
+          onBasketUpdate={() => setBasketUpdatedEvent(prev => prev + 1)}
+        />
         
         <div className="w-full pb-4 pt-2 px-4 bg-gradient-to-t from-white via-white to-transparent dark:from-slate-900 dark:via-slate-900 absolute bottom-0">
           <div className="max-w-4xl mx-auto">
@@ -101,6 +114,13 @@ function App() {
           </div>
         </div>
       </main>
+
+      <BasketSidebar 
+        isOpen={isBasketOpen} 
+        onClose={() => setIsBasketOpen(false)} 
+        basketUpdatedEvent={basketUpdatedEvent}
+        onCheckout={() => handleSendMessage("Checkout my basket")}
+      />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { ToolRegistry } from '../../tools/ToolRegistry';
 export interface RouteResult {
     originalMessage: string;
     injectedContext?: string;
+    toolData?: any;
 }
 
 export class AIRouterService {
@@ -103,18 +104,14 @@ If no tool is appropriate or the request is vague, use:
                     resultsStr = "No results found.";
                 }
                 
-                let formattingRule = `CRITICAL FORMATTING RULE: If you are recommending products, you MUST format each product EXACTLY as a bullet point on its own line like this:
-* **[Product Name]** - $[Price] (Rating: [X.X]) - [Short description explaining why you recommend it] - [URL]
-NEVER use paragraphs to list products. NEVER deviate from this exact bulleted format. NEVER invent products that are not in the results below.`;
+                let formattingRule = `CRITICAL FORMATTING RULE: The system has already displayed the products to the user in a UI. You MUST NOT list the products or output any markdown bullet points. Provide a brief, friendly, conversational summary of the results.`;
 
                 if (tool.name === 'product_comparison') {
-                    formattingRule = `CRITICAL FORMATTING RULE: Since this is a product comparison, you MUST start your response exactly with the string '[COMPARISON_RESULT]'. 
-Then, format each compared product EXACTLY as a bullet point on its own line like this:
-* **[Product Name]** - $[Price] (Rating: [X.X]) - [Brand/Description] - [URL]
-
-After listing the products in that exact bulleted format, you must explain the price differences, ratings, pros, cons, and best value in a detailed analysis. 
-Finish your analysis with a bold 'My recommendation:' section.
-NEVER dump raw JSON. NEVER deviate from the bulleted format for the products.`;
+                    formattingRule = `CRITICAL FORMATTING RULE: The system has already displayed a comparison table to the user in the UI. You MUST NOT list the products or output any markdown bullet points. 
+Just explain the price differences, ratings, pros, cons, and best value in a detailed conversational analysis. 
+Finish your analysis with a bold 'My recommendation:' section.`;
+                } else if (tool.name === 'basket') {
+                    formattingRule = `CRITICAL FORMATTING RULE: The user has updated their basket or asked to view/checkout their basket. Politely summarize the action taken. If they checked out, present the Order Summary nicely.`;
                 }
 
                 return {
@@ -123,7 +120,8 @@ NEVER dump raw JSON. NEVER deviate from the bulleted format for the products.`;
 ${formattingRule}
 
 TOOL RESULTS:
-${resultsStr}`
+${resultsStr}`,
+                    toolData: results
                 };
             } else {
                 console.error(`[AIRouterService] LLM requested unknown tool: ${parsed.tool}`);

@@ -19,7 +19,10 @@ export const handleChat = async (req: Request, res: Response, next: NextFunction
         // 2. Pass original message + any injected context to LLM
         const replyText = await GeminiService.generateChatResponse(message, routeResult.injectedContext);
         
-        const response: ChatResponse = { reply: replyText };
+        const response: ChatResponse = { 
+            reply: replyText,
+            data: routeResult.toolData
+        };
         res.json(response);
     } catch (error) {
         next(error);

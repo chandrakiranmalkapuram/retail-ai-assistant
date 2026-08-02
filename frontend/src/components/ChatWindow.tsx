@@ -3,58 +3,40 @@ import ChatMessage from './ChatMessage';
 import ProductList from './ProductList';
 import ComparisonTable from './ComparisonTable';
 import type { Message } from '../types/chat';
-import type { ProductSearchResult } from '../../../shared/types/product.types';
+
 
 interface ChatWindowProps {
   messages: Message[];
   isTyping?: boolean;
   onSendMessage?: (message: string) => void;
+  onBasketUpdate?: () => void;
 }
 
-const parseMessageContent = (content: string) => {
-    // Only parse assistant messages
-    const products: Partial<ProductSearchResult>[] = [];
-    let isComparison = false;
-    
-    if (content.includes('[COMPARISON_RESULT]')) {
-        isComparison = true;
-        content = content.replace(/\[COMPARISON_RESULT\]/g, '');
-    }
-
-    const lines = content.split('\n');
-    const cleanLines: string[] = [];
-
-    // Pattern matches: * **Product Name** - $Price (Rating: ...) - Description - URL
-    const pattern = /^\*\s+\*\*(.+?)\*\*(?:\s+for\s+|\s*-\s*)\$?([\d,.]+)(?:\s*\(Rating:\s*([\d.]+)\))?[\s:-]+(.*?)(?:\s*-\s*(https?:\/\/[^\s]+))?\s*$/i;
-
-    for (const line of lines) {
-        const match = line.match(pattern);
-        if (match) {
-            products.push({
-                name: match[1].trim(),
-                price: match[2].trim(),
-                rating: match[3] ? match[3].trim() : undefined,
-                description: match[4] ? match[4].trim() : undefined,
-                url: match[5] ? match[5].trim() : undefined
-            });
-        } else {
-            cleanLines.push(line);
-        }
-    }
-
-    return {
-        text: cleanLines.join('\n').trim(),
-        products,
-        isComparison
-    };
-};
-
-const ChatWindow: React.FC<ChatWindowProps> = ({ messages, isTyping, onSendMessage }) => {
+const ChatWindow: React.FC<ChatWindowProps> = ({ messages, isTyping, onSendMessage, onBasketUpdate }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+  // Track processed basket updates to avoid infinite loops
+  const processedMessageIds = useRef<Set<number>>(new Set());
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  useEffect(() => {
+    let basketUpdated = false;
+    messages.forEach((msg) => {
+      if (msg.role === 'assistant' && !processedMessageIds.current.has(msg.id)) {
+        if (msg.data?.type === 'basket_update') {
+          basketUpdated = true;
+        }
+        processedMessageIds.current.add(msg.id);
+      }
+    });
+    
+    if (basketUpdated && onBasketUpdate) {
+      onBasketUpdate();
+    }
+  }, [messages, onBasketUpdate]);
 
   return (
     <div className="flex-1 w-full max-w-4xl mx-auto overflow-hidden flex flex-col">
@@ -91,23 +73,23 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages, isTyping, onSendMessa
 
         <div className="pt-8">
           {messages.map((msg) => {
-            const { text, products, isComparison } = msg.role === 'assistant' 
-                ? parseMessageContent(msg.content) 
-                : { text: msg.content, products: [], isComparison: false };
+            const isComparison = msg.data?.type === 'comparison_results';
+            const isProductResults = msg.data?.type === 'product_results';
+            const products = msg.data?.products || [];
                 
             return (
               <div key={msg.id} className="flex flex-col w-full">
                 {/* Normal messages */}
-                {text && !isComparison && (
+                {msg.content && !isComparison && (
                   <ChatMessage
                     role={msg.role}
-                    content={text}
+                    content={msg.content}
                     timestamp={msg.timestamp}
                   />
                 )}
 
                 {/* AI Recommendation Card (For Comparisons) */}
-                {text && isComparison && (
+                {msg.content && isComparison && (
                   <div className="bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 rounded-xl p-6 mt-4 w-full">
                     <h4 className="flex items-center gap-2 font-semibold text-indigo-900 dark:text-indigo-300 mb-4">
                       <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -117,19 +99,19 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages, isTyping, onSendMessa
                     </h4>
                     <ChatMessage
                       role={msg.role}
-                      content={text}
+                      content={msg.content}
                       timestamp={msg.timestamp}
                     />
                   </div>
                 )}
 
                 {/* Normal Product List */}
-                {products.length > 0 && !isComparison && (
-                  <ProductList products={products} />
+                {isProductResults && products.length > 0 && (
+                  <ProductList products={products} onSendMessage={onSendMessage} />
                 )}
 
                 {/* Product Comparison Table */}
-                {products.length > 0 && isComparison && (
+                {isComparison && products.length > 0 && (
                   <ComparisonTable products={products} />
                 )}
               </div>

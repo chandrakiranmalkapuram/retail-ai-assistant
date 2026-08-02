@@ -2,6 +2,7 @@ import { Tool } from './Tool';
 import { ProductSearchTool } from './ProductSearchTool';
 import { OrderTool } from './OrderTool';
 import { ProductComparisonTool } from './ProductComparisonTool';
+import { BasketTool } from './BasketTool';
 
 export class ToolRegistry {
     private static tools: Map<string, Tool> = new Map();

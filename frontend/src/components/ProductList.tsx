@@ -4,9 +4,10 @@ import type { ProductSearchResult } from '../../../shared/types/product.types';
 
 interface ProductListProps {
     products: Partial<ProductSearchResult>[];
+    onSendMessage?: (message: string) => void;
 }
 
-const ProductList: React.FC<ProductListProps> = ({ products }) => {
+const ProductList: React.FC<ProductListProps> = ({ products, onSendMessage }) => {
     if (!products || products.length === 0) return null;
 
     return (
@@ -23,6 +24,9 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
                         rating={product.rating}
                         description={product.description}
                         url={product.url}
+                        image={product.image}
+                        brand={product.brand}
+                        onSendMessage={onSendMessage}
                     />
                 ))}
             </div>

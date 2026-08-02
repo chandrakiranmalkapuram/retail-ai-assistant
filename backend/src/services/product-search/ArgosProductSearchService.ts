@@ -1,66 +1,50 @@
 import { ProductSearchResult } from '../../../../shared/types/product.types';
+import { SearchProvider } from '../../providers/search/SearchProvider';
+import { TavilySearchProvider } from '../../providers/search/TavilySearchProvider';
+import { SearchParser } from '../../parsers/SearchParser';
+import { ArgosSearchParser } from '../../parsers/ArgosSearchParser';
 
 export class ArgosProductSearchService {
+    private searchProvider: SearchProvider;
+    private searchParser: SearchParser;
+
+    constructor() {
+        // Initialize with Tavily and Argos Parser.
+        // In a true dependency injection setup, these would be passed in.
+        this.searchProvider = new TavilySearchProvider();
+        this.searchParser = new ArgosSearchParser();
+    }
+
     /**
-     * Searches for products on Argos.
-     * 
-     * Note: Since Argos does not expose a stable, documented public REST API 
-     * for external developers, the underlying implementation here abstracts 
-     * the data source. We can easily replace the internal logic later 
-     * (e.g., using a web scraper with Cheerio, or an official GraphQL endpoint) 
-     * without changing this public interface.
+     * Searches for products using a generic SearchProvider and SearchParser.
      * 
      * @param query The natural language search term (e.g., "cheap 4k tv")
      * @returns A promise resolving to an array of product search results.
      */
     public async searchProducts(query: string): Promise<ProductSearchResult[]> {
-        console.log(`[ArgosProductSearchService] Initiating real physical product search for: "${query}"`);
+        console.log(`[ArgosProductSearchService] Initiating retrieval-augmented search for: "${query}"`);
 
         try {
-            // Using DummyJSON API as the data source.
-            // Why: Major physical retailers block automated scraping. DummyJSON provides a free, key-less API
-            // with highly realistic mock physical electronics (phones, laptops) perfect for testing retail AI flows.
+            // 1. Fetch raw search snippets from the Search Engine
+            const rawSnippets = await this.searchProvider.search(query);
             
-            let url = `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}&limit=5`;
-            const lowerQuery = query.toLowerCase();
-            
-            // Map common vague search terms directly to DummyJSON categories for better mock results
-            if (lowerQuery.includes('phone') || lowerQuery.includes('mobile')) {
-                url = 'https://dummyjson.com/products/category/smartphones?limit=5';
-            } else if (lowerQuery.includes('laptop') || lowerQuery.includes('macbook')) {
-                url = 'https://dummyjson.com/products/category/laptops?limit=5';
-            } else if (lowerQuery.includes('tablet')) {
-                url = 'https://dummyjson.com/products/category/tablets?limit=5';
-            }
-            
-            const response = await fetch(url);
-            
-            if (!response.ok) {
-                console.error(`[ArgosProductSearchService] Fetch failed: ${response.statusText}`);
+            if (!rawSnippets || rawSnippets.length === 0) {
+                console.log(`[ArgosProductSearchService] No search results found for "${query}".`);
                 return [];
             }
-
-            const data = await response.json();
-
-            if (!data.products || data.products.length === 0) {
-                return [];
+            
+            // 2. Parse snippets into structured ProductSearchResults
+            const products = this.searchParser.parse(rawSnippets);
+            
+            if (products.length === 0) {
+                console.log(`[ArgosProductSearchService] Could not parse any valid products from search results for "${query}".`);
+            } else {
+                console.log(`[ArgosProductSearchService] Successfully parsed ${products.length} products.`);
             }
 
-            // Map the DummyJSON API results to our strict ProductSearchResult interface
-            return data.products.map((item: any) => ({
-                id: String(item.id),
-                name: item.title || 'Unknown Product',
-                brand: item.brand || 'Generic',
-                price: item.price || 0,
-                image: item.thumbnail || (item.images && item.images.length > 0 ? item.images[0] : ''),
-                url: `https://dummyjson.com/products/${item.id}`,
-                rating: item.rating || 0,
-                availability: item.stock > 0 || item.availabilityStatus === 'In Stock',
-                description: item.description || '',
-                matchConfidence: 0.95
-            }));
+            return products;
         } catch (error) {
-            console.error('[ArgosProductSearchService] Error during live search:', error);
+            console.error('[ArgosProductSearchService] Error during retrieval-augmented search:', error);
             return [];
         }
     }

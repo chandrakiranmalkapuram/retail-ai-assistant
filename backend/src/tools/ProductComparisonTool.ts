@@ -25,12 +25,16 @@ export class ProductComparisonTool implements Tool {
         this.comparisonService = new ProductComparisonService();
     }
 
-    public async execute(args: any): Promise<ProductSearchResult[]> {
+    public async execute(args: any): Promise<any> {
         const productNames = args.productNames;
         if (!productNames || !Array.isArray(productNames) || productNames.length === 0) {
             throw new Error("Missing or invalid 'productNames' argument for product_comparison tool");
         }
         console.log(`[ProductComparisonTool] Executing comparison for:`, productNames);
-        return await this.comparisonService.compareProducts(productNames);
+        const results = await this.comparisonService.compareProducts(productNames);
+        return {
+            type: 'comparison_results',
+            products: results
+        };
     }
 }
