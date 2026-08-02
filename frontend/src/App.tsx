@@ -16,11 +16,28 @@ function App() {
     }
     return [];
   });
+  
   const [isTyping, setIsTyping] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    return localStorage.getItem("theme") === "dark" || 
+      (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  });
 
   useEffect(() => {
     localStorage.setItem("chat_messages", JSON.stringify(messages));
   }, [messages]);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDarkMode]);
+
+  const toggleDarkMode = () => setIsDarkMode(prev => !prev);
 
   const handleSendMessage = async (message: string) => {
     const userMessage: Message = {
@@ -69,13 +86,19 @@ function App() {
   };
 
   return (
-    <div className="h-screen bg-gray-50 flex flex-col overflow-hidden">
-      <Header />
+    <div className="h-screen bg-white dark:bg-slate-900 transition-colors duration-300 flex flex-col overflow-hidden font-sans">
+      <Header isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
 
-      <main className="flex-1 flex flex-col overflow-hidden w-full mx-auto">
+      <main className="flex-1 flex flex-col overflow-hidden w-full max-w-5xl mx-auto relative">
         <ChatWindow messages={messages} isTyping={isTyping} onSendMessage={handleSendMessage} />
-        <div className="w-full max-w-4xl mx-auto">
-          <ChatInput onSendMessage={handleSendMessage} disabled={isTyping} />
+        
+        <div className="w-full pb-4 pt-2 px-4 bg-gradient-to-t from-white via-white to-transparent dark:from-slate-900 dark:via-slate-900 absolute bottom-0">
+          <div className="max-w-4xl mx-auto">
+            <ChatInput onSendMessage={handleSendMessage} disabled={isTyping} />
+            <p className="text-center text-xs text-gray-400 dark:text-gray-500 mt-2">
+              Retail AI Assistant can make mistakes. Please verify important information.
+            </p>
+          </div>
         </div>
       </main>
     </div>

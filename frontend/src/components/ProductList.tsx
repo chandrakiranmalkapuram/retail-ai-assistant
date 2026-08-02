@@ -1,20 +1,20 @@
 import React from 'react';
 import ProductCard from './ProductCard';
-import type { ProductCardProps } from './ProductCard';
+import type { ProductSearchResult } from '../../../shared/types/product.types';
 
 interface ProductListProps {
-    products: ProductCardProps[];
+    products: Partial<ProductSearchResult>[];
 }
 
 const ProductList: React.FC<ProductListProps> = ({ products }) => {
     if (!products || products.length === 0) return null;
 
     return (
-        <div className="my-6">
-            <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
+        <div className="my-8 w-full">
+            <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-5 pl-2">
                 Recommended Products
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {products.map((product, index) => (
                     <ProductCard 
                         key={`${product.name}-${index}`} 
@@ -22,6 +22,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
                         price={product.price}
                         rating={product.rating}
                         description={product.description}
+                        url={product.url}
                     />
                 ))}
             </div>

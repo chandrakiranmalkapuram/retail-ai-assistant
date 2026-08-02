@@ -4,6 +4,7 @@ interface ChatInputProps {
     onSendMessage: (message: string) => void;
     disabled?: boolean;
 }
+
 const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled = false }) => {
     const [message, setMessage] = useState("");
     const [animatingText, setAnimatingText] = useState<string | null>(null);
@@ -14,26 +15,24 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled = false }
         const sentMessage = message;
         setAnimatingText(sentMessage);
         
-        // Wait briefly for the animation before actually triggering the chat update
         setTimeout(() => {
             onSendMessage(sentMessage);
         }, 200);
 
         setMessage("");
 
-        // Reset animation state
         setTimeout(() => {
             setAnimatingText(null);
         }, 800);
     };
+    
     return (
-        <div className="w-full p-4 flex-shrink-0">
-            <div className="relative flex items-center bg-gray-50 rounded-full border border-gray-200 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-transparent transition-shadow shadow-sm">
+        <div className="w-full flex-shrink-0 px-2 md:px-0">
+            <div className="relative flex items-center bg-gray-100 dark:bg-slate-800 rounded-3xl border border-transparent dark:border-slate-700 focus-within:bg-white dark:focus-within:bg-slate-800 focus-within:ring-1 focus-within:ring-gray-300 dark:focus-within:ring-slate-600 focus-within:shadow-md transition-all shadow-sm group">
 
-                {/* Microphone Button (Left) */}
                 <button
                     type="button"
-                    className="p-3 ml-1 text-gray-500 hover:text-indigo-600 transition-colors rounded-full focus:outline-none"
+                    className="p-3.5 ml-1 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors rounded-full focus:outline-none"
                     aria-label="Voice input"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -43,7 +42,6 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled = false }
                     </svg>
                 </button>
 
-                {/* Text Input */}
                 <input
                     type="text"
                     value={message}
@@ -54,18 +52,20 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled = false }
                             sendMessage();
                         }
                     }}
-                    className="flex-1 bg-transparent border-none py-3 px-2 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed"
-                    placeholder="Ask me anything about products or orders..."
+                    className="flex-1 bg-transparent border-none py-4 px-2 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-0 disabled:opacity-50 disabled:cursor-not-allowed text-[15px]"
+                    placeholder="Ask me anything..."
                 />
-                {/* Send Button (Right) */}
+
                 <button
                     type="button"
                     onClick={sendMessage}
-                    disabled={disabled}
-                    className={`mr-2 bg-indigo-600 text-white rounded-full transition-all duration-300 shadow-sm focus:outline-none flex items-center justify-center relative ${
-                        disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-indigo-700'
+                    disabled={disabled || !message.trim()}
+                    className={`mr-2 rounded-full transition-all duration-300 focus:outline-none flex items-center justify-center relative ${
+                        disabled || !message.trim() 
+                        ? 'bg-gray-200 dark:bg-slate-700 text-gray-400 dark:text-gray-500 cursor-not-allowed' 
+                        : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm'
                     } ${
-                        animatingText ? 'px-4 py-2 w-auto max-w-[150px]' : 'p-2 w-10 h-10'
+                        animatingText ? 'px-4 py-2 w-auto max-w-[150px]' : 'p-2 w-9 h-9'
                     }`}
                     aria-label="Send message"
                 >
@@ -74,9 +74,9 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled = false }
                             {animatingText}
                         </span>
                     ) : (
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 ml-[2px] transition-transform duration-300 hover:translate-x-1 hover:-translate-y-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <line x1="22" y1="2" x2="11" y2="13" />
-                            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                        <svg xmlns="http://www.w3.org/2000/svg" className={`w-4 h-4 ml-[1px] transition-transform duration-300 ${(!disabled && message.trim()) ? 'hover:translate-x-0.5 hover:-translate-y-0.5' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="12" y1="19" x2="12" y2="5" />
+                            <polyline points="5 12 12 5 19 12" />
                         </svg>
                     )}
                 </button>
