@@ -43,7 +43,7 @@
 
 The **Retail AI Platform** is a cutting-edge, scalable AI assistant tailored for the e-commerce and retail sector. Traditional chatbots are rigid and hardcoded; this project leverages large language models (LLMs) via **OpenRouter** and **Google Gemini** to create a dynamic, conversational shopping assistant that actually understands user intent.
 
-At the core of the platform is a robust **Provider Architecture** and an **AI Tool Registry**. This design allows the AI to intelligently decide which backend tools (e.g., Product Search, Order Tracking) to execute based on the conversation context. The platform is built to support multiple retailers out-of-the-box, with **Argos** currently implemented as the first supported retailer.
+At the core of the platform is a robust **Provider Architecture** and an **AI Tool Registry**. This design allows the AI to intelligently decide which backend tools (e.g., Product Search, Order Tracking, Basket Management) to execute based on the conversation context. The platform is built to support multiple retailers out-of-the-box, with **Argos** currently implemented as the first supported retailer powered by live web scraping via the **Tavily API**.
 
 ## 🔭 Future Vision
 
@@ -58,29 +58,24 @@ Here is everything implemented in the platform so far:
 - ✅ **AI Shopping Assistant:** Intelligently asks follow-up questions for vague requests.
 - ✅ **AI Tool Registry:** Dynamically registers and routes tools for the LLM to execute.
 - ✅ **Modular Provider Pattern:** Highly scalable architecture for multi-retailer support.
-- ✅ **Product Search:** Live product querying with intelligent context matching.
-- ✅ **Product Search Tool:** Dedicated tool for the AI to query catalog data.
+- ✅ **Live Product Search:** Real-time web querying using the Tavily API to fetch current Argos products.
+- ✅ **Product Search Tool:** Dedicated tool for the AI to query catalog data and return structured JSON UI components.
 - ✅ **Product Comparison:** Dynamic side-by-side comparison tables with AI evaluation.
-- ✅ **Order Tracking:** Real-time tracking for specific order numbers.
-- ✅ **Order History:** Retrieves past purchases for authenticated customers.
+- ✅ **AI Shopping Basket:** Add, remove, update, view, and checkout items dynamically through natural language.
+- ✅ **Order Tracking & History:** Real-time tracking and previous order retrieval.
 - ✅ **Conversation Memory:** Context-aware chat that remembers earlier messages.
-- ✅ **React Frontend:** Fast, modern, and highly responsive user interface.
+- ✅ **Structured JSON Responses:** Replaced brittle markdown parsing with robust JSON UI rendering.
+- ✅ **React Frontend:** Fast, modern, and highly responsive user interface with dynamic theme switching (Dark/Light mode).
 - ✅ **Express Backend:** Secure and robust API layer.
 - ✅ **OpenRouter + Gemini Integration:** State-of-the-art LLM capabilities.
 - ✅ **Responsive Chat UI:** Beautifully crafted with Tailwind CSS.
-- ✅ **Beautiful Product Cards:** Renders search results visually with fetched images.
-- ✅ **Comparison Table UI:** Responsive table transforming to stacked cards on mobile.
-- ✅ **Typing Indicator:** Animated bouncy dots while the AI is "thinking".
-- ✅ **Auto Scroll:** Automatically tracks the latest messages.
-- ✅ **Local Chat History:** Persists chat sessions across reloads.
-- ✅ **Message Timestamps:** Accurate time tracking for all chat nodes.
 - ✅ **Reusable Components:** Clean, maintainable React architecture.
 
 ---
 
 ## 🏗️ Architecture
 
-The platform utilizes an LLM-driven Tool Registry. The frontend communicates with the Express backend, where the AI Router intercepts the message, identifies the intent, and dynamically executes registered tools.
+The platform utilizes an LLM-driven Tool Registry that passes structured JSON payloads directly to the frontend for UI rendering. The frontend communicates with the Express backend, where the AI Router intercepts the message, identifies the intent, and dynamically executes registered tools.
 
 ```mermaid
 graph LR
@@ -91,12 +86,14 @@ graph LR
     subgraph Tooling Layer
     Router <--> Registry[Tool Registry]
     Registry --> ProductSearch[Product Search Tool]
+    Registry --> Comparison[Product Comparison Tool]
+    Registry --> Basket[Basket Tool]
     Registry --> OrderTrack[Order Tool]
     end
     
     ProductSearch --> Provider[Retail Provider Pattern]
-    Provider --> Argos[Argos Provider]
-    Argos --> API[(Retail Data Source)]
+    Provider --> Argos[Argos Provider (Tavily)]
+    Argos --> API[(Live Web Data)]
     
     OrderTrack --> OrderDB[(Order Database)]
 ```
@@ -112,7 +109,7 @@ graph LR
 retail-ai-platform/
 ├── frontend/                     # React + Vite UI
 │   ├── src/
-│   │   ├── components/           # Reusable UI components (ChatWindow, ProductCard)
+│   │   ├── components/           # UI components (ChatWindow, ProductCard, BasketSidebar)
 │   │   ├── types/                # TypeScript interfaces
 │   │   ├── App.tsx               # Main application view
 │   │   └── index.css             # Tailwind styling
@@ -124,9 +121,10 @@ retail-ai-platform/
 │   │   ├── config/               # Environment and Prompts
 │   │   ├── controllers/          # Route handlers
 │   │   ├── middleware/           # Error handling & CORS
-│   │   ├── providers/            # Retailer integrations (ArgosProvider)
-│   │   ├── services/             # Core logic (LLM, OrderService)
-│   │   ├── tools/                # AI Tools (ToolRegistry, ProductSearchTool)
+│   │   ├── parsers/              # Scraping Parsers (ArgosSearchParser)
+│   │   ├── providers/            # Retailer integrations (TavilySearchProvider)
+│   │   ├── services/             # Core logic (LLM, BasketService, ProductComparisonService)
+│   │   ├── tools/                # AI Tools (ToolRegistry, ProductSearchTool, BasketTool)
 │   │   ├── types/                # TypeScript interfaces
 │   │   └── server.ts             # Express entry point
 │   └── package.json
@@ -155,7 +153,8 @@ retail-ai-platform/
 
 What can users currently do in the application?
 - **Search Products:** *"I need a Samsung phone"* or *"Show me some laptops"*
-- **Receive Visual Recommendations:** The AI will display beautiful, hydrated product cards.
+- **Receive Visual Recommendations:** The AI will display beautiful, hydrated product cards driven by structured JSON.
+- **Manage Basket:** *"Add this to my basket"* or *"Remove the iPhone from my cart"* or *"Checkout"*
 - **Compare Products:** *"Compare iPhone 16 and Samsung Galaxy S25"* to see side-by-side analysis.
 - **Track Orders:** *"Where is order ORD-010?"*
 - **View Previous Orders:** *"What did I buy last month?"*
@@ -174,6 +173,9 @@ What can users currently do in the application?
 - [x] Product Search
 - [x] Beautiful UI Product Cards
 - [x] Product Comparison
+- [x] AI Shopping Basket
+- [x] Live Web Search Integration (Tavily)
+- [x] Structured JSON UI Rendering
 
 ### Planned
 - [ ] Store Availability Tool
@@ -192,8 +194,9 @@ What can users currently do in the application?
 | **Frontend** | React 19, Vite, TypeScript |
 | **Backend** | Node.js, Express, TypeScript |
 | **AI / LLM** | Google Gemini (via OpenRouter API) |
+| **Search** | Tavily Search API |
 | **Styling** | Tailwind CSS v4 |
-| **Development** | Nodemon, Oxlint |
+| **Development** | Nodemon, Vite |
 
 ---
 
@@ -212,6 +215,7 @@ Create a `.env` file in the `backend/` directory:
 ```env
 PORT=3001
 OPENROUTER_API_KEY=your_openrouter_api_key_here
+TAVILY_API_KEY=your_tavily_api_key_here
 ```
 
 ### 3. Install & Run Backend
@@ -229,7 +233,7 @@ cd frontend
 npm install
 npm run dev
 ```
-*The frontend will start on `http://localhost:5173`.*
+*The frontend will start on `http://localhost:5173` (or the next available port).*
 
 ---
 
@@ -255,7 +259,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 **Chandra Kiran** - [LinkedIn](https://www.linkedin.com/in/chandra-kiran-malkapuram/)
 
-Project Link: [https://github.com/yourusername/retail-ai-platform](https://github.com/chandrakiranmalkapuram/retail-ai-assistant)
+Project Link: [https://github.com/chandrakiranmalkapuram/retail-ai-assistant](https://github.com/chandrakiranmalkapuram/retail-ai-assistant)
 
 <div align="center">
   <i>If you found this project helpful, please consider giving it a ⭐ on GitHub!</i>
