@@ -61,8 +61,9 @@ export class GeminiService {
 
                 // Execute the tool locally
                 for (const toolCall of responseMessage.tool_calls) {
-                    if (toolCall.function.name === 'get_compatible_products') {
-                        const toolResult = executeProductCompatibilityTool(toolCall.function.arguments);
+                    const call = toolCall as any;
+                    if (call.function.name === 'get_compatible_products') {
+                        const toolResult = executeProductCompatibilityTool(call.function.arguments);
                         // Add tool result to history
                         this.conversationHistory.push({
                             role: 'tool',

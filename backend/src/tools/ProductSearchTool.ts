@@ -1,6 +1,6 @@
 import { Tool } from './Tool';
 import { ArgosProductSearchService } from '../services/product-search/ArgosProductSearchService';
-import { ProductSearchResult } from '../types/product.types';
+import { ProductSearchResult } from '../../../shared/types/product.types';
 
 export class ProductSearchTool implements Tool {
     public name = 'product_search';

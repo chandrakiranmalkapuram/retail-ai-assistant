@@ -1,3 +1,5 @@
+import { ProductSearchResult } from '../../../shared/types/product.types';
+
 /**
  * Interface that every future retailer must implement to integrate with the AI Assistant.
  * This ensures that regardless of the backend (Argos, Currys, John Lewis, etc.),
@@ -8,7 +10,7 @@ export interface RetailProvider {
      * Searches for products based on a natural language query.
      * @param query The search term from the user (e.g., "cheap 4k tv")
      */
-    searchProducts(query: string): Promise<any[]>;
+    searchProducts(query: string): Promise<ProductSearchResult[]>;
 
     /**
      * Retrieves full details for a specific product.

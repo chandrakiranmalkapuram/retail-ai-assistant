@@ -103,12 +103,27 @@ If no tool is appropriate or the request is vague, use:
                     resultsStr = "No results found.";
                 }
                 
+                let formattingRule = `CRITICAL FORMATTING RULE: If you are recommending products, you MUST format each product EXACTLY as a bullet point on its own line like this:
+* **[Product Name]** - $[Price] (Rating: [X.X]) - [Short description explaining why you recommend it] - [URL]
+NEVER use paragraphs to list products. NEVER deviate from this exact bulleted format. NEVER invent products that are not in the results below.`;
+
+                if (tool.name === 'product_comparison') {
+                    formattingRule = `CRITICAL FORMATTING RULE: Since this is a product comparison, you MUST start your response exactly with the string '[COMPARISON_RESULT]'. 
+Then, format each compared product EXACTLY as a bullet point on its own line like this:
+* **[Product Name]** - $[Price] (Rating: [X.X]) - [Brand/Description] - [URL]
+
+After listing the products in that exact bulleted format, you must explain the price differences, ratings, pros, cons, and best value in a detailed analysis. 
+Finish your analysis with a bold 'My recommendation:' section.
+NEVER dump raw JSON. NEVER deviate from the bulleted format for the products.`;
+                }
+
                 return {
                     originalMessage: message,
                     injectedContext: `The system automatically executed the tool "${tool.name}" with arguments ${JSON.stringify(parsed.args)}. Below are the results. Please summarize this politely and helpfully for the user.
-CRITICAL FORMATTING RULE: If you are recommending products, you MUST format each product EXACTLY as a bullet point on its own line like this:
-* **[Product Name]** - $[Price] (Rating: [X.X]) - [Short description explaining why you recommend it]
-NEVER use paragraphs to list products. NEVER deviate from this exact bulleted format. NEVER invent products that are not in the results below.\n\nTOOL RESULTS:\n${resultsStr}`
+${formattingRule}
+
+TOOL RESULTS:
+${resultsStr}`
                 };
             } else {
                 console.error(`[AIRouterService] LLM requested unknown tool: ${parsed.tool}`);

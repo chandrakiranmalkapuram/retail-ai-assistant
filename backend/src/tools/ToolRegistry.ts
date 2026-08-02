@@ -1,6 +1,7 @@
 import { Tool } from './Tool';
 import { ProductSearchTool } from './ProductSearchTool';
 import { OrderTool } from './OrderTool';
+import { ProductComparisonTool } from './ProductComparisonTool';
 
 export class ToolRegistry {
     private static tools: Map<string, Tool> = new Map();
@@ -41,6 +42,7 @@ export class ToolRegistry {
     public static initialize() {
         this.registerTool(new ProductSearchTool());
         this.registerTool(new OrderTool());
+        this.registerTool(new ProductComparisonTool());
     }
 }
 

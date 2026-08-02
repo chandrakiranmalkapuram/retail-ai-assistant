@@ -60,6 +60,7 @@ Here is everything implemented in the platform so far:
 - ✅ **Modular Provider Pattern:** Highly scalable architecture for multi-retailer support.
 - ✅ **Product Search:** Live product querying with intelligent context matching.
 - ✅ **Product Search Tool:** Dedicated tool for the AI to query catalog data.
+- ✅ **Product Comparison:** Dynamic side-by-side comparison tables with AI evaluation.
 - ✅ **Order Tracking:** Real-time tracking for specific order numbers.
 - ✅ **Order History:** Retrieves past purchases for authenticated customers.
 - ✅ **Conversation Memory:** Context-aware chat that remembers earlier messages.
@@ -68,6 +69,7 @@ Here is everything implemented in the platform so far:
 - ✅ **OpenRouter + Gemini Integration:** State-of-the-art LLM capabilities.
 - ✅ **Responsive Chat UI:** Beautifully crafted with Tailwind CSS.
 - ✅ **Beautiful Product Cards:** Renders search results visually with fetched images.
+- ✅ **Comparison Table UI:** Responsive table transforming to stacked cards on mobile.
 - ✅ **Typing Indicator:** Animated bouncy dots while the AI is "thinking".
 - ✅ **Auto Scroll:** Automatically tracks the latest messages.
 - ✅ **Local Chat History:** Persists chat sessions across reloads.
@@ -154,6 +156,7 @@ retail-ai-platform/
 What can users currently do in the application?
 - **Search Products:** *"I need a Samsung phone"* or *"Show me some laptops"*
 - **Receive Visual Recommendations:** The AI will display beautiful, hydrated product cards.
+- **Compare Products:** *"Compare iPhone 16 and Samsung Galaxy S25"* to see side-by-side analysis.
 - **Track Orders:** *"Where is order ORD-010?"*
 - **View Previous Orders:** *"What did I buy last month?"*
 - **Ask Shopping Questions:** Have natural conversations about product features.
@@ -170,10 +173,10 @@ What can users currently do in the application?
 - [x] Order Tool
 - [x] Product Search
 - [x] Beautiful UI Product Cards
+- [x] Product Comparison
 
 ### Planned
 - [ ] Store Availability Tool
-- [ ] Product Comparison
 - [ ] Voice Shopping
 - [ ] Multi Retail Support (Currys, Tesco)
 - [ ] Authentication Integration

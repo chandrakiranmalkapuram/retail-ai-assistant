@@ -1,4 +1,4 @@
-import { ProductSearchResult } from '../../types/product.types';
+import { ProductSearchResult } from '../../../../shared/types/product.types';
 
 export class ArgosProductSearchService {
     /**
