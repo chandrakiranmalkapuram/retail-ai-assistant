@@ -63,6 +63,7 @@ Here is everything implemented in the platform so far:
 - ✅ **Product Comparison:** Dynamic side-by-side comparison tables with AI evaluation.
 - ✅ **AI Shopping Basket:** Add, remove, update, view, and checkout items dynamically through natural language.
 - ✅ **Order Tracking & History:** Real-time tracking and previous order retrieval.
+- ✅ **Conversation Sidebar:** ChatGPT-style sidebar to manage multiple chats, search history, pin conversations, and auto-generate titles.
 - ✅ **Conversation Memory:** Context-aware chat that remembers earlier messages.
 - ✅ **Structured JSON Responses:** Replaced brittle markdown parsing with robust JSON UI rendering.
 - ✅ **React Frontend:** Fast, modern, and highly responsive user interface with dynamic theme switching (Dark/Light mode).
@@ -176,6 +177,7 @@ What can users currently do in the application?
 - [x] AI Shopping Basket
 - [x] Live Web Search Integration (Tavily)
 - [x] Structured JSON UI Rendering
+- [x] ChatGPT-Style Conversation Sidebar
 
 ### Planned
 - [ ] Store Availability Tool
