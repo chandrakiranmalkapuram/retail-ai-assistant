@@ -1,29 +1,26 @@
-import OpenAI from 'openai';
-import * as dotenv from 'dotenv';
-
-dotenv.config();
-
-if (!process.env.OPENROUTER_API_KEY) {
-    throw new Error('OPENROUTER_API_KEY is missing from environment variables.');
-}
-
-const openai = new OpenAI({
-    baseURL: "https://openrouter.ai/api/v1",
-    apiKey: process.env.OPENROUTER_API_KEY,
-    defaultHeaders: {
-        "HTTP-Referer": "http://localhost:3000",
-        "X-Title": "Retail AI Assistant",
-        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`
-    }
-});
-
-import { PromptBuilderService } from './prompt-builder.service';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
+import { LLMProvider } from './LLMProvider';
+import { OpenRouterProvider } from './OpenRouterProvider';
+import { GrokProvider } from './GrokProvider';
+import { PromptBuilderService } from './prompt-builder.service';
 import { ProductCompatibilityToolDefinition, executeProductCompatibilityTool } from '../tools/ProductCompatibilityTool';
 
-export class GeminiService {
+export class LLMService {
     private static conversationHistory: ChatCompletionMessageParam[] = [];
     private static readonly MAX_HISTORY = 20;
+    private static provider: LLMProvider;
+
+    private static getProvider(): LLMProvider {
+        if (!this.provider) {
+            const providerName = process.env.LLM_PROVIDER?.toLowerCase();
+            if (providerName === 'grok') {
+                this.provider = new GrokProvider();
+            } else {
+                this.provider = new OpenRouterProvider();
+            }
+        }
+        return this.provider;
+    }
 
     static getHistory(): ChatCompletionMessageParam[] {
         return this.conversationHistory;
@@ -38,18 +35,7 @@ export class GeminiService {
                 messagesPayload.push({ role: 'system', content: injectedContext });
             }
 
-            const completion = await openai.chat.completions.create({
-                model: 'google/gemini-2.5-flash',
-                messages: messagesPayload,
-                max_tokens: 1000,
-                tools: [ProductCompatibilityToolDefinition],
-                tool_choice: 'auto'
-            });
-
-            const responseMessage = completion.choices[0]?.message;
-            if (!responseMessage) {
-                return "I'm sorry, I couldn't generate a response.";
-            }
+            const responseMessage = await this.getProvider().generateResponse(messagesPayload, [ProductCompatibilityToolDefinition]);
 
             // 1. User message always gets added to history
             this.conversationHistory.push({ role: 'user', content: message });
@@ -81,13 +67,9 @@ export class GeminiService {
                     ...this.conversationHistory
                 ];
 
-                const secondCompletion = await openai.chat.completions.create({
-                    model: 'google/gemini-2.5-flash',
-                    messages: secondTurnPayload,
-                    max_tokens: 1000,
-                });
+                const secondResponseMessage = await this.getProvider().generateResponse(secondTurnPayload);
 
-                const finalReply = secondCompletion.choices[0]?.message?.content || "Sorry, I couldn't summarize the findings.";
+                const finalReply = secondResponseMessage.content || "Sorry, I couldn't summarize the findings.";
                 this.conversationHistory.push({ role: 'assistant', content: finalReply });
                 this.enforceLimit();
                 return finalReply;
@@ -100,9 +82,13 @@ export class GeminiService {
             return reply;
 
         } catch (error) {
-            console.error("OpenRouter API Error:", error);
-            throw new Error("Failed to communicate with OpenRouter API");
+            console.error("LLM Service Error:", error);
+            throw new Error("Failed to communicate with LLM API");
         }
+    }
+
+    static async generateToolCall(prompt: string): Promise<string> {
+        return this.getProvider().generateToolCall(prompt);
     }
 
     private static enforceLimit() {

@@ -1,5 +1,5 @@
-import OpenAI from 'openai';
 import { ToolRegistry } from '../../tools/ToolRegistry';
+import { LLMService } from './LLMService';
 
 export interface RouteResult {
     originalMessage: string;
@@ -8,16 +8,6 @@ export interface RouteResult {
 }
 
 export class AIRouterService {
-    // We reuse the configured OpenAI client for tool classification
-    private static openai = new OpenAI({
-        baseURL: "https://openrouter.ai/api/v1",
-        apiKey: process.env.OPENROUTER_API_KEY,
-        defaultHeaders: {
-            "HTTP-Referer": "http://localhost:3000",
-            "X-Title": "Retail AI Assistant",
-        }
-    });
-
     /**
      * Intercepts user messages, uses LLM to select a tool from the ToolRegistry, and executes it.
      */
@@ -65,13 +55,8 @@ If no tool is appropriate or the request is vague, use:
 }
 `;
 
-            const completion = await this.openai.chat.completions.create({
-                model: 'google/gemini-2.5-flash',
-                messages: [{ role: 'user', content: classificationPrompt }],
-                max_tokens: 200,
-            });
-
-            const reply = completion.choices[0]?.message?.content?.trim() || '';
+            const replyText = await LLMService.generateToolCall(classificationPrompt);
+            const reply = replyText.trim();
             
             // Clean up any potential markdown formatting the LLM might have ignored instructions and added
             const jsonStr = reply.replace(/^```json\s*/i, '').replace(/\s*```$/i, '');

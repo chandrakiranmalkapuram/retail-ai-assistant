@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { GeminiService } from '../services/llm/gemini.service';
+import { LLMService } from '../services/llm/LLMService';
 import { AIRouterService } from '../services/llm/ai-router.service';
 import { ChatRequest, ChatResponse } from '../types';
 
@@ -13,11 +13,11 @@ export const handleChat = async (req: Request, res: Response, next: NextFunction
         }
 
         // 1. Route the message to catch product search intent (pass history for context)
-        const history = GeminiService.getHistory();
+        const history = LLMService.getHistory();
         const routeResult = await AIRouterService.routeMessage(message, history);
 
         // 2. Pass original message + any injected context to LLM
-        const replyText = await GeminiService.generateChatResponse(message, routeResult.injectedContext);
+        const replyText = await LLMService.generateChatResponse(message, routeResult.injectedContext);
         
         const response: ChatResponse = { 
             reply: replyText,
