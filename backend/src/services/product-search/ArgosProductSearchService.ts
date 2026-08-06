@@ -1,31 +1,31 @@
 import { ProductSearchResult } from '../../../../shared/types/product.types';
 import { SearchProvider } from '../../providers/search/SearchProvider';
 import { TavilySearchProvider } from '../../providers/search/TavilySearchProvider';
-import { SearchParser } from '../../parsers/SearchParser';
-import { ArgosSearchParser } from '../../parsers/ArgosSearchParser';
+import { ArgosPageFetcher } from './ArgosPageFetcher';
+import { ArgosPageParser } from './ArgosPageParser';
 
 export class ArgosProductSearchService {
     private searchProvider: SearchProvider;
-    private searchParser: SearchParser;
+    private pageFetcher: ArgosPageFetcher;
+    private pageParser: ArgosPageParser;
 
     constructor() {
-        // Initialize with Tavily and Argos Parser.
-        // In a true dependency injection setup, these would be passed in.
+        // Initialize with Tavily for Stage 1, and Fetcher/Parser for Stage 2
         this.searchProvider = new TavilySearchProvider();
-        this.searchParser = new ArgosSearchParser();
+        this.pageFetcher = new ArgosPageFetcher();
+        this.pageParser = new ArgosPageParser();
     }
 
     /**
-     * Searches for products using a generic SearchProvider and SearchParser.
-     * 
-     * @param query The natural language search term (e.g., "cheap 4k tv")
-     * @returns A promise resolving to an array of product search results.
+     * Searches for products using a two-stage retrieval process.
+     * Stage 1: Discover official Argos URLs using Tavily.
+     * Stage 2: Fetch the official HTML and parse structured details.
      */
     public async searchProducts(query: string): Promise<ProductSearchResult[]> {
-        console.log(`[ArgosProductSearchService] Initiating retrieval-augmented search for: "${query}"`);
+        console.log(`[ArgosProductSearchService] Stage 1: Initiating Tavily search for URLs: "${query}"`);
 
         try {
-            // 1. Fetch raw search snippets from the Search Engine
+            // 1. Fetch raw search snippets to discover URLs
             const rawSnippets = await this.searchProvider.search(query);
             
             if (!rawSnippets || rawSnippets.length === 0) {
@@ -33,18 +33,34 @@ export class ArgosProductSearchService {
                 return [];
             }
             
-            // 2. Parse snippets into structured ProductSearchResults
-            const products = this.searchParser.parse(rawSnippets);
+            // Extract unique Argos URLs
+            const urls = Array.from(new Set(
+                rawSnippets
+                    .map(snippet => snippet.url)
+                    .filter(url => url && url.includes('argos.co.uk/product/'))
+            ));
+
+            console.log(`[ArgosProductSearchService] Discovered ${urls.length} Argos product URLs.`);
+
+            // 2. Stage 2: Fetch and Parse Official Pages
+            const products: ProductSearchResult[] = [];
             
-            if (products.length === 0) {
-                console.log(`[ArgosProductSearchService] Could not parse any valid products from search results for "${query}".`);
-            } else {
-                console.log(`[ArgosProductSearchService] Successfully parsed ${products.length} products.`);
+            // Limit to 4 parallel fetches to avoid excessive scraping
+            for (const url of urls.slice(0, 4)) {
+                const html = await this.pageFetcher.fetchHtml(url);
+                if (html) {
+                    const parsedProduct = this.pageParser.parse(html, url);
+                    if (parsedProduct) {
+                        products.push(parsedProduct);
+                    }
+                }
             }
+            
+            console.log(`[ArgosProductSearchService] Stage 2 Complete. Successfully parsed ${products.length} official products.`);
 
             return products;
         } catch (error) {
-            console.error('[ArgosProductSearchService] Error during retrieval-augmented search:', error);
+            console.error('[ArgosProductSearchService] Error during two-stage retrieval search:', error);
             return [];
         }
     }

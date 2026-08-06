@@ -1,8 +1,10 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import ChatMessage from './ChatMessage';
 import ProductList from './ProductList';
 import ComparisonTable from './ComparisonTable';
 import type { Message } from '../types/chat';
+import { ComparisonTray } from './ComparisonTray';
+import type { ProductSearchResult } from '../../../shared/types/product.types';
 
 
 interface ChatWindowProps {
@@ -17,6 +19,32 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages, isTyping, onSendMessa
   
   // Track processed basket updates to avoid infinite loops
   const processedMessageIds = useRef<Set<number>>(new Set());
+
+  // Comparison Tray State
+  const [compareProducts, setCompareProducts] = useState<ProductSearchResult[]>([]);
+
+  const handleAddToCompare = (product: ProductSearchResult) => {
+      setCompareProducts(prev => {
+          if (prev.find(p => p.id === product.id)) return prev;
+          if (prev.length >= 4) {
+              alert("You can only compare up to 4 products at a time.");
+              return prev;
+          }
+          return [...prev, product];
+      });
+  };
+
+  const handleRemoveFromCompare = (id: string) => {
+      setCompareProducts(prev => prev.filter(p => p.id !== id));
+  };
+
+  const handleCompareNow = () => {
+      if (onSendMessage && compareProducts.length >= 2) {
+          const query = `Compare these products: ${compareProducts.map(p => p.name).join(' vs ')}`;
+          onSendMessage(query);
+          setCompareProducts([]);
+      }
+  };
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -107,7 +135,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages, isTyping, onSendMessa
 
                 {/* Normal Product List */}
                 {isProductResults && products.length > 0 && (
-                  <ProductList products={products} onSendMessage={onSendMessage} />
+                  <ProductList products={products} onSendMessage={onSendMessage} onAddToCompare={handleAddToCompare} />
                 )}
 
                 {/* Product Comparison Table */}
@@ -143,6 +171,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages, isTyping, onSendMessa
           <div ref={messagesEndRef} className="h-4" />
         </div>
       </div>
+      <ComparisonTray products={compareProducts as any[]} onRemove={handleRemoveFromCompare} onCompareNow={handleCompareNow} />
     </div>
   );
 };

@@ -58,9 +58,9 @@ Here is everything implemented in the platform so far:
 - ✅ **AI Shopping Assistant:** Intelligently asks follow-up questions for vague requests.
 - ✅ **AI Tool Registry:** Dynamically registers and routes tools for the LLM to execute.
 - ✅ **Modular Provider Pattern:** Highly scalable architecture for multi-retailer support.
-- ✅ **Live Product Search:** Real-time web querying using the Tavily API to fetch current Argos products.
+- ✅ **Live Product Search (Two-Stage):** Discovers URLs via Tavily API, then uses Puppeteer & Cheerio to scrape and parse official Argos HTML for maximum accuracy.
 - ✅ **Product Search Tool:** Dedicated tool for the AI to query catalog data and return structured JSON UI components.
-- ✅ **Product Comparison:** Dynamic side-by-side comparison tables with AI evaluation.
+- ✅ **Comparison Tray:** Interactive frontend tray to queue up to 4 products before initiating an AI-powered comparison.
 - ✅ **AI Shopping Basket:** Add, remove, update, view, and checkout items dynamically through natural language.
 - ✅ **Order Tracking & History:** Real-time tracking and previous order retrieval.
 - ✅ **Conversation Sidebar:** ChatGPT-style sidebar to manage multiple chats, search history, pin conversations, and auto-generate titles.
@@ -68,7 +68,7 @@ Here is everything implemented in the platform so far:
 - ✅ **Structured JSON Responses:** Replaced brittle markdown parsing with robust JSON UI rendering.
 - ✅ **React Frontend:** Fast, modern, and highly responsive user interface with dynamic theme switching (Dark/Light mode).
 - ✅ **Express Backend:** Secure and robust API layer.
-- ✅ **OpenRouter + Gemini Integration:** State-of-the-art LLM capabilities.
+- ✅ **Multi-LLM Support:** Dynamic `LLM_PROVIDER` layer supporting both **Grok (xAI)** and **OpenRouter** (Gemini/Claude/etc) without code changes.
 - ✅ **Responsive Chat UI:** Beautifully crafted with Tailwind CSS.
 - ✅ **Reusable Components:** Clean, maintainable React architecture.
 
@@ -93,10 +93,17 @@ graph LR
     end
     
     ProductSearch --> Provider[Retail Provider Pattern]
-    Provider --> Argos[Argos Provider (Tavily)]
-    Argos --> API[(Live Web Data)]
+    Provider --> Argos[Argos Provider]
+    Argos --> Tavily[(Tavily URL Discovery)]
+    Argos --> Puppeteer[(Puppeteer HTML Scraper)]
     
     OrderTrack --> OrderDB[(Order Database)]
+    
+    subgraph LLM Provider Layer
+    Router --> LLMService
+    LLMService --> Grok[Grok Provider]
+    LLMService --> OpenRouter[OpenRouter Provider]
+    end
 ```
 
 ---
@@ -195,8 +202,8 @@ What can users currently do in the application?
 |---|---|
 | **Frontend** | React 19, Vite, TypeScript |
 | **Backend** | Node.js, Express, TypeScript |
-| **AI / LLM** | Google Gemini (via OpenRouter API) |
-| **Search** | Tavily Search API |
+| **AI / LLM** | Grok (xAI) & OpenRouter (Gemini, Claude, etc.) |
+| **Search / Scraping** | Tavily API, Puppeteer, Cheerio |
 | **Styling** | Tailwind CSS v4 |
 | **Development** | Nodemon, Vite |
 
@@ -216,6 +223,9 @@ cd retail-ai-platform
 Create a `.env` file in the `backend/` directory:
 ```env
 PORT=3001
+# Choose 'grok' or 'openrouter'
+LLM_PROVIDER=grok
+XAI_API_KEY=your_xai_api_key_here
 OPENROUTER_API_KEY=your_openrouter_api_key_here
 TAVILY_API_KEY=your_tavily_api_key_here
 ```

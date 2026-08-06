@@ -5,9 +5,10 @@ import type { ProductSearchResult } from '../../../shared/types/product.types';
 interface ProductListProps {
     products: Partial<ProductSearchResult>[];
     onSendMessage?: (message: string) => void;
+    onAddToCompare?: (product: ProductSearchResult) => void;
 }
 
-const ProductList: React.FC<ProductListProps> = ({ products, onSendMessage }) => {
+const ProductList: React.FC<ProductListProps> = ({ products, onSendMessage, onAddToCompare }) => {
     if (!products || products.length === 0) return null;
 
     return (
@@ -18,7 +19,8 @@ const ProductList: React.FC<ProductListProps> = ({ products, onSendMessage }) =>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {products.map((product, index) => (
                     <ProductCard 
-                        key={`${product.name}-${index}`} 
+                        key={product.id || `${product.name}-${index}`} 
+                        id={product.id}
                         name={product.name}
                         price={product.price}
                         rating={product.rating}
@@ -27,6 +29,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, onSendMessage }) =>
                         image={product.image}
                         brand={product.brand}
                         onSendMessage={onSendMessage}
+                        onAddToCompare={onAddToCompare}
                     />
                 ))}
             </div>

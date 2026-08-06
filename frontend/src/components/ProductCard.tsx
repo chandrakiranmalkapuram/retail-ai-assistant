@@ -3,9 +3,11 @@ import type { ProductSearchResult } from '../../../shared/types/product.types';
 
 interface ProductCardProps extends Partial<ProductSearchResult> {
     onSendMessage?: (message: string) => void;
+    onAddToCompare?: (product: ProductSearchResult) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ name, price, rating, description, url, image: initialImage, brand: initialBrand, availability: initialAvailability, onSendMessage }) => {
+const ProductCard: React.FC<ProductCardProps> = (props) => {
+    const { name, price, rating, description, url, image: initialImage, brand: initialBrand, availability: initialAvailability, onSendMessage, onAddToCompare } = props;
     const [image] = useState<string | null>(initialImage || null);
     const [brand] = useState<string>(initialBrand || 'Argos');
     const [availability] = useState<string>(initialAvailability ? String(initialAvailability) : 'In Stock');
@@ -73,7 +75,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, price, rating, descript
 
                 <div className="mt-auto flex gap-3">
                     <button 
-                        onClick={() => onSendMessage ? onSendMessage(`Compare ${name}`) : alert(`Comparison feature coming soon for ${name}!`)}
+                        onClick={() => onAddToCompare ? onAddToCompare(props as ProductSearchResult) : onSendMessage ? onSendMessage(`Compare ${name}`) : alert(`Comparison feature coming soon for ${name}!`)}
                         disabled={loading}
                         className="flex-1 py-2.5 px-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-200 font-medium rounded-xl transition-colors duration-200 text-sm focus:outline-none disabled:opacity-50"
                     >
